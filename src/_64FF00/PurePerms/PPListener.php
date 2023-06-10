@@ -6,7 +6,7 @@ use _64FF00\PurePerms\EventManager\PPRankChangedEvent;
 use _64FF00\PurePerms\EventManager\PPRankExpiredEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\entity\EntityTeleportEvent;
-use pocketmine\event\player\PlayerCommandPreprocessEvent;
+use pocketmine\event\server\CommandEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\event\player\PlayerLoginEvent;
 use pocketmine\lang\Translatable;
@@ -60,25 +60,15 @@ class PPListener implements Listener
             $this->plugin->updatePermissions($player, $event->getTo()->getWorld()->getDisplayName());
         }
     }
-
-    public function onPlayerCommand(PlayerCommandPreprocessEvent $event)
-    {
-        $message = $event->getMessage();
-        $player = $event->getPlayer();
-
-        if(substr($message, 0, 1) === "/")
+    public function onPlayerCommand(CommandEvent $event){
+        $sender = $event->getSender();
+        $command = $event->getCommand();
+        $disableOp = $this->plugin->getConfigValue("disable-op");
+        $args = explode(" ", $command);
+        if($disableOp and $args[0] === "op")
         {
-            $command = substr($message, 1);
-            $args = explode(" ", $command);
-
-            $disableOp = $this->plugin->getConfigValue("disable-op");
-
-            if($disableOp and $args[0] === "op")
-            {
-                $event->cancel();
-
-                $player->sendMessage(new Translatable(TextFormat::RED . "%commands.generic.permission"));
-            }
+            $event->cancel();
+            $sender->sendMessage(new Translatable(TextFormat::RED . "%commands.generic.permission"));
         }
     }
 

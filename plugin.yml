@@ -3,10 +3,12 @@
 
 name: PurePerms
 main: _64FF00\PurePerms\PurePerms
-version: 2.0.2
-api: [4.0.0]
+version: 2.0.3-alphadev1
+api: [5.0.0]
 load: POSTWORLD
 author: "Vecnavium , 64FF00 & ProjectInfinity"
+authors:
+  - "DemonicDev (bump to API5)"
 permissions:
   pperms:
     default: op
