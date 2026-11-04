@@ -28,7 +28,7 @@ class PPListener implements Listener
           888  888    "Y8888P"        888  888        888        "Y8888P"   "Y8888P"
     */
 
-    private $plugin;
+    private PurePerms $plugin;
 
     /**
      * @param PurePerms $plugin
@@ -39,10 +39,10 @@ class PPListener implements Listener
     }
 
     /**
-     * @param PPGroupChangedEvent $event
+     * @param PPRankChangedEvent $event
      * @priority LOWEST
      */
-    public function onGroupChanged(PPRankChangedEvent $event)
+    public function onGroupChanged(PPRankChangedEvent $event): void
     {
         $player = $event->getPlayer();
         $this->plugin->updatePermissions($player);
@@ -52,7 +52,7 @@ class PPListener implements Listener
      * @param EntityTeleportEvent $event
      * @priority MONITOR
      */
-    public function onLevelChange(EntityTeleportEvent $event)
+    public function onLevelChange(EntityTeleportEvent $event): void
     {
         if($event->isCancelled()) return;
         $player = $event->getEntity();
@@ -60,12 +60,12 @@ class PPListener implements Listener
             $this->plugin->updatePermissions($player, $event->getTo()->getWorld()->getDisplayName());
         }
     }
-    public function onPlayerCommand(CommandEvent $event){
+    public function onPlayerCommand(CommandEvent $event): void{
         $sender = $event->getSender();
         $command = $event->getCommand();
         $disableOp = $this->plugin->getConfigValue("disable-op");
         $args = explode(" ", $command);
-        if($disableOp and $args[0] === "op")
+        if($disableOp === true and $args[0] === "op")
         {
             $event->cancel();
             $sender->sendMessage(new Translatable(TextFormat::RED . "%commands.generic.permission"));
@@ -76,7 +76,7 @@ class PPListener implements Listener
      * @param PlayerLoginEvent $event
      * @priority LOWEST
      */
-    public function onPlayerLogin(PlayerLoginEvent $event)
+    public function onPlayerLogin(PlayerLoginEvent $event): void
     {
         $player = $event->getPlayer();
         $this->plugin->registerPlayer($player);
@@ -86,7 +86,7 @@ class PPListener implements Listener
      * @param PlayerQuitEvent $event
      * @priority HIGHEST
      */
-    public function onPlayerQuit(PlayerQuitEvent $event)
+    public function onPlayerQuit(PlayerQuitEvent $event): void
     {
         $player = $event->getPlayer();
         $this->plugin->unregisterPlayer($player);
@@ -96,9 +96,11 @@ class PPListener implements Listener
      * @param PPRankExpiredEvent $event
      * @priority LOWEST
      */
-    public function onRankExpired(PPRankExpiredEvent $event)
+    public function onRankExpired(PPRankExpiredEvent $event): void
     {
         $player = $event->getPlayer();
-        $this->plugin->setGroup($player, $this->plugin->getDefaultGroup());
+        $group = $this->plugin->getDefaultGroup();
+        if($group !== null)
+            $this->plugin->setGroup($player, $group);
     }
 }

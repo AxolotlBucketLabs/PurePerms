@@ -4,18 +4,14 @@ namespace _64FF00\PurePerms\Commands;
 
 use _64FF00\PurePerms\PurePerms;
 
-use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\ConsoleCommandSender;
-use pocketmine\plugin\Plugin;
+use pocketmine\console\ConsoleCommandSender;
+use pocketmine\permission\Permission;
 use pocketmine\plugin\PluginBase;
-use pocketmine\plugin\PluginOwned;
-use pocketmine\plugin\PluginOwnedTrait;
 use pocketmine\utils\TextFormat;
 
-class PLPerms extends Command implements PluginOwned
+class PLPerms extends PurePermsCommand
 {
-	use PluginOwnedTrait;
     /*
         PurePerms by 64FF00 (Twitter: @64FF00)
 
@@ -29,24 +25,16 @@ class PLPerms extends Command implements PluginOwned
           888  888    "Y8888P"        888  888        888        "Y8888P"   "Y8888P"
     */
 
-    private $plugin;
-
-    /**
-     * @param PurePerms $plugin
-     * @param $name
-     * @param $description
-     */
-    public function __construct(PurePerms $plugin, $name, $description)
+    public function __construct(PurePerms $plugin, string $name, string $description)
     {
-        $this->plugin = $plugin;
-        parent::__construct($name, $description);
+        parent::__construct($plugin, $name, $description);
         $this->setPermission("pperms.command.plperms");
     }
 
     /**
      * @param CommandSender $sender
      * @param $label
-     * @param array $args
+     * @param list<string> $args
      * @return bool
      */
     public function execute(CommandSender $sender, string $label, array $args) : bool
@@ -59,23 +47,37 @@ class PLPerms extends Command implements PluginOwned
             return true;
         }
         
-        $plugin = (strtolower($args[0]) === 'pocketmine' || strtolower($args[0]) === 'pmmp') ? 'pocketmine' : $this->plugin->getServer()->getPluginManager()->getPlugin($args[0]);
-        if($plugin === null)
+        $isPocketMine = strtolower($args[0]) === 'pocketmine' || strtolower($args[0]) === 'pmmp';
+        $plugin = $isPocketMine ? null : $this->plugin->getServer()->getPluginManager()->getPlugin($args[0]);
+        if(!$isPocketMine && $plugin === null)
         {
             $sender->sendMessage(TextFormat::RED . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.plperms.messages.plugin_not_exist", $args[0]));
             return true;
         }
         
-        $permissions = ($plugin instanceof PluginBase) ? $plugin->getDescription()->getPermissions() : $this->plugin->getPocketMinePerms();
+        $permissions = [];
+        if($plugin instanceof PluginBase)
+        {
+            foreach($plugin->getDescription()->getPermissions() as $permissionList)
+            {
+                foreach($permissionList as $permission)
+                    $permissions[] = $permission->getName();
+            }
+        }
+        else
+        {
+            foreach($this->plugin->getPocketMinePerms() as $permission)
+                $permissions[] = $permission;
+        }
         if(empty($permissions))
         {
-            $sender->sendMessage(TextFormat::GREEN . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.plperms.messages.no_plugin_perms", $plugin->getName()));
+            $pluginName = $plugin instanceof PluginBase ? $plugin->getName() : 'PocketMine-MP';
+            $sender->sendMessage(TextFormat::GREEN . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.plperms.messages.no_plugin_perms", $pluginName));
             return true;
         }
         
         $pageHeight = $sender instanceof ConsoleCommandSender ? 48 : 6;
-        $chunkedPermissions = array_chunk($permissions, $pageHeight);
-        $maxPageNumber = count($chunkedPermissions);
+        $maxPageNumber = max(1, (int) ceil(count($permissions) / $pageHeight));
         if(!isset($args[1]) || !is_numeric($args[1]) || $args[1] <= 0) 
         {
             $pageNumber = 1;
@@ -86,19 +88,17 @@ class PLPerms extends Command implements PluginOwned
         }
         else 
         {
-            $pageNumber = $args[1];
+        $pageNumber = (int) $args[1];
         }
         
-        $sender->sendMessage(TextFormat::GREEN . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.plperms.messages.plugin_perms_list", ($plugin instanceof PluginBase) ? $plugin->getName(): 'PocketMine-MP', $pageNumber, $maxPageNumber));
-        foreach($chunkedPermissions[$pageNumber - 1] as $permission)
+        $pluginName = $plugin instanceof PluginBase ? $plugin->getName() : 'PocketMine-MP';
+        $sender->sendMessage(TextFormat::GREEN . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.plperms.messages.plugin_perms_list", $pluginName, $pageNumber, $maxPageNumber));
+        $pagePermissions = array_slice($permissions, ($pageNumber - 1) * $pageHeight, $pageHeight);
+        foreach($pagePermissions as $permission)
         {
-            $sender->sendMessage(TextFormat::GREEN . PurePerms::MAIN_PREFIX . ' - ' . $permission->getName());
+            $sender->sendMessage(TextFormat::GREEN . PurePerms::MAIN_PREFIX . ' - ' . $permission);
         }
         return true;
     }
     
-    public function getPlugin() : Plugin
-    {
-        return $this->plugin;
-    }
 }

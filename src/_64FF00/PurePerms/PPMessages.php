@@ -19,10 +19,10 @@ class PPMessages
           888  888    "Y8888P"        888  888        888        "Y8888P"   "Y8888P"
     */
 
-    /** @var $language */
-    private string $language;
-    /** @var Config $messages */
+    private PurePerms $plugin;
+    private string $language = "en";
     private Config $messages;
+    /** @var list<string> */
     private array $langList = [];
 
     /**
@@ -35,58 +35,59 @@ class PPMessages
         $this->loadMessages();
     }
 
-    public function registerLanguages()
+    public function registerLanguages(): void
     {
         $result = [];
         foreach($this->plugin->getResources() as $resource)
         {
-            if(mb_strpos($resource, "messages-") !== false) $result[] = substr($resource, -6, -4);
+            $resourceName = $resource->getFilename();
+            if(mb_strpos($resourceName, "messages-") !== false) $result[] = substr($resourceName, -6, -4);
         }
         $this->langList = $result;
     }
 
     /**
-     * @param $node
-     * @param array ...$vars
-     * @return mixed|null
+     * @param string $node
+     * @param mixed ...$vars
+     * @return string
      */
-    public function getMessage($node, ...$vars)
+    public function getMessage(string $node, mixed ...$vars): string
     {
         $msg = $this->messages->getNested($node);
-        if($msg != null)
+        if(is_string($msg))
         {
             $number = 0;
             foreach($vars as $v)
             {           
-                $msg = str_replace("%var$number%", $v, $msg);
+                $msg = str_replace("%var$number%", is_scalar($v) ? (string) $v : "", $msg);
                 $number++;
             }
             return $msg;
         }
-        return null;
+        return "";
     }
 
-    /**
-     * @return mixed
-     */
     public function getVersion() : string
     {
         $version = $this->messages->get("messages-version");
-        return $version;
+        return is_string($version) ? $version : "0.0.0";
     }
 
-    public function loadMessages()
+    public function loadMessages(): void
     {       
-        $defaultLang = $this->plugin->getConfigValue("default-language");
+        $defaultLangValue = $this->plugin->getConfigValue("default-language");
+        $defaultLang = is_string($defaultLangValue) ? $defaultLangValue : "en";
+        $languageFound = false;
         foreach($this->langList as $langName)
         {
             if(strtolower($defaultLang) == $langName)
             {
                 $this->language = $langName;
+                $languageFound = true;
             }
         }
         
-        if(!isset($this->language))
+        if(!$languageFound)
         {
             $this->plugin->getLogger()->warning("Language resource " . $defaultLang . " not found. Using default language resource by " . $this->plugin->getDescription()->getAuthors()[0]);
             $this->language = "en";
@@ -104,7 +105,7 @@ class PPMessages
         }
     }
     
-    public function reloadMessages()
+    public function reloadMessages(): void
     {
         $this->messages->reload();
     }    

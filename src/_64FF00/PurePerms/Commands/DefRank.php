@@ -4,16 +4,11 @@ namespace _64FF00\PurePerms\Commands;
 
 use _64FF00\PurePerms\PurePerms;
 
-use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\plugin\Plugin;
-use pocketmine\plugin\PluginOwned;
-use pocketmine\plugin\PluginOwnedTrait;
 use pocketmine\utils\TextFormat;
 
-class DefRank extends Command implements PluginOwned
+class DefRank extends PurePermsCommand
 {
-	use PluginOwnedTrait;
     /*
         PurePerms by 64FF00 (Twitter: @64FF00)
 
@@ -27,24 +22,16 @@ class DefRank extends Command implements PluginOwned
           888  888    "Y8888P"        888  888        888        "Y8888P"   "Y8888P"
     */
 
-    private $plugin;
-
-    /**
-     * @param PurePerms $plugin
-     * @param $name
-     * @param $description
-     */
-    public function __construct(PurePerms $plugin, $name, $description)
+    public function __construct(PurePerms $plugin, string $name, string $description)
     {
-        $this->plugin = $plugin;
-        parent::__construct($name, $description);
+        parent::__construct($plugin, $name, $description);
         $this->setPermission("pperms.command.defrank");
     }
 
     /**
      * @param CommandSender $sender
      * @param $label
-     * @param array $args
+     * @param list<string> $args
      * @return bool
      */
     public function execute(CommandSender $sender, string $label, array $args) : bool
@@ -82,8 +69,4 @@ class DefRank extends Command implements PluginOwned
         return true;
     }
     
-    public function getPlugin() : Plugin
-    {
-        return $this->plugin;
-    }
 }

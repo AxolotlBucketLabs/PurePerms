@@ -21,7 +21,7 @@ class PPMySQLTask extends Task
           888  888    "Y8888P"        888  888        888        "Y8888P"   "Y8888P"
     */
 
-    private $db;
+    private \mysqli $db;
 
     private PurePerms $plugin;
 

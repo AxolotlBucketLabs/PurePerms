@@ -4,19 +4,14 @@ namespace _64FF00\PurePerms\Commands;
 
 use _64FF00\PurePerms\PurePerms;
 
-use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\ConsoleCommandSender;
+use pocketmine\console\ConsoleCommandSender;
 
 use pocketmine\player\Player;
-use pocketmine\plugin\Plugin;
-use pocketmine\plugin\PluginOwned;
-use pocketmine\plugin\PluginOwnedTrait;
 use pocketmine\utils\TextFormat;
 
-class SetRank extends Command implements PluginOwned
+class SetRank extends PurePermsCommand
 {
-	use PluginOwnedTrait;
     /*
         PurePerms by 64FF00 (Twitter: @64FF00)
 
@@ -30,24 +25,16 @@ class SetRank extends Command implements PluginOwned
           888  888    "Y8888P"        888  888        888        "Y8888P"   "Y8888P"
     */
 
-    private $plugin;
-
-    /**
-     * @param PurePerms $plugin
-     * @param $name
-     * @param $description
-     */
-    public function __construct(PurePerms $plugin, $name, $description)
+    public function __construct(PurePerms $plugin, string $name, string $description)
     {
-        $this->plugin = $plugin;
-        parent::__construct($name, $description);
+        parent::__construct($plugin, $name, $description);
         $this->setPermission("pperms.command.setrank");
     }
 
     /**
      * @param CommandSender $sender
      * @param $label
-     * @param array $args
+     * @param list<string> $args
      * @return bool
      */
     public function execute(CommandSender $sender, string $label, array $args) : bool
@@ -87,9 +74,12 @@ class SetRank extends Command implements PluginOwned
         }
 
         $superAdminRanks = $this->plugin->getConfigValue("superadmin-ranks");
-        foreach(array_values($superAdminRanks) as $value)
+        /** @var array<string, int> $tmpSuperAdminRanks */
+        $tmpSuperAdminRanks = [];
+        foreach(is_array($superAdminRanks) ? array_values($superAdminRanks) : [] as $value)
         {
-            $tmpSuperAdminRanks[$value] = 1;
+            if(is_string($value))
+                $tmpSuperAdminRanks[$value] = 1;
         }
 
         if(!($sender instanceof ConsoleCommandSender))
@@ -101,7 +91,7 @@ class SetRank extends Command implements PluginOwned
             }
 
             $userGroup = $this->plugin->getUserDataMgr()->getGroup($player, $WorldName);
-            if(isset($tmpSuperAdminRanks[$userGroup->getName()]))
+            if($userGroup !== null && isset($tmpSuperAdminRanks[$userGroup->getName()]))
             {
                 $sender->sendMessage(TextFormat::RED . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.setrank.messages.access_denied_02", $userGroup->getName()));
                 return true;
@@ -114,15 +104,11 @@ class SetRank extends Command implements PluginOwned
         
         if($player instanceof Player)
         {
-            if(!$this->plugin->getConfigValue("enable-multiworld-perms") || ($this->plugin->getConfigValue("enable-multiworld-perms") and $WorldName === $player->getWorld()->getDisplayName()))
+            if($this->plugin->getConfigValue("enable-multiworld-perms") !== true || ($WorldName === $player->getWorld()->getDisplayName()))
                 $player->sendMessage(TextFormat::GREEN . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.setrank.messages.on_player_rank_change", strtolower($group->getName())));
         }
 
         return true;
     }
     
-    public function getPlugin() : Plugin
-    {
-        return $this->plugin;
-    }
 }

@@ -25,12 +25,15 @@ class PPRankExpiredEvent extends PluginEvent
           888  888    "Y8888P"        888  888        888        "Y8888P"   "Y8888P"
     */
 
-    public static $handlerList = null;
+    /** @var ?\pocketmine\event\HandlerList<PPRankExpiredEvent> */
+    public static ?\pocketmine\event\HandlerList $handlerList = null;
+
+    private IPlayer $player;
+    private ?string $worldName;
 
     /**
      * @param PurePerms $plugin
      * @param IPlayer $player
-     * @param PPGroup $group
      * @param $worldName
      */
     public function __construct(PurePerms $plugin, IPlayer $player, ?string $worldName)
@@ -43,15 +46,15 @@ class PPRankExpiredEvent extends PluginEvent
     /**
      * @return World
      */
-    public function getWorld()
+    public function getWorld(): ?World
     {
-        return $this->getPlugin()->getServer()->getLevelByName($this->worldName);
+        return $this->getPlugin() instanceof PurePerms ? $this->getPlugin()->getServer()->getWorldManager()->getWorldByName($this->worldName ?? "") : null;
     }
 
     /**
      * @return string
      */
-    public function getLevelName()
+    public function getLevelName(): ?string
     {
         return $this->worldName;
     }
@@ -59,7 +62,7 @@ class PPRankExpiredEvent extends PluginEvent
     /**
      * @return IPlayer
      */
-    public function getPlayer()
+    public function getPlayer(): IPlayer
     {
         return $this->player;
     }

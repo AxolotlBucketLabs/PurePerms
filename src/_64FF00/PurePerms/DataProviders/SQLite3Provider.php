@@ -20,47 +20,51 @@ class SQLite3Provider implements ProviderInterface
       888  888    "Y8888P"        888  888        888        "Y8888P"   "Y8888P"
 */
 
-    private $db, $plugin;
-    private $groupsData = [];
+    private \SQLite3 $db;
+    /** @var array<string, array<string, mixed>> */
+    private array $groupsData = [];
 
     /**
      * @param PurePerms $plugin
      */
     public function __construct(PurePerms $plugin)
     {
-        $this->plugin = $plugin;
         $this->db = new \SQLite3($plugin->getDataFolder()."pureperms.db");
         $this->db->exec("");
         $this->loadGroupsData();
     }
 
-    public function loadGroupsData()
+    public function loadGroupsData(): void
     {
         //
     }
 
-    public function getGroupData(PPGroup $group){
+    public function getGroupData(PPGroup $group): array{
+        return [];
     }
 
-    public function getGroupsData(){
+    public function getGroupsData(): array{
+        return $this->groupsData;
     }
 
-    public function getPlayerData(IPlayer $player){
+    public function getPlayerData(IPlayer $player): array{
+        return [];
     }
 
-    public function getUsers(){
+    public function getUsers(): ?array{
+        return null;
     }
 
-    public function setGroupData(PPGroup $group, array $tempGroupData){
+    public function setGroupData(PPGroup $group, array $tempGroupData): void{
     }
 
-    public function setGroupsData(array $tempGroupsData){
+    public function setGroupsData(array $tempGroupsData): void{
     }
 
-    public function setPlayerData(IPlayer $player, array $tempPlayerData){
+    public function setPlayerData(IPlayer $player, array $tempPlayerData): void{
     }
 
-    public function close(){
+    public function close(): void{
     }
 
 }

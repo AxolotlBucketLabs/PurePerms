@@ -1,14 +1,19 @@
 <p align="center">
-    <a href="https://github.com/Vecnavium/PurePerms"><img src="https://github.com/Vecnavium/PurePerms/blob/stable/icon.png"></img></a><br>
-    <b>Manage your permissions like you did on Bukkit. The best permissions manager for PocketMine-MP.</b>
+    <img src="https://github.com/Vecnavium/PurePerms/blob/stable/icon.png" alt="PurePerms icon" width="128" /><br>
+    <b>PurePerms continuation for Axolotl-PM API 5.</b>
 </p>
 
-<p align="center">
-    <a href="https://discord.gg/6M9tGyWPjr"><img src="https://img.shields.io/discord/837701868649709568?label=discord&color=7289DA&logo=discord" alt="Discord" /></a>
-</p>
+PurePerms is a permissions and rank manager for PocketMine-MP-compatible servers. This repository is the maintained API 5 continuation under [NhanAZ-Plugins](https://github.com/NhanAZ-Plugins). The plugin keeps the original `PurePerms` identity, commands, permission nodes, providers, and data layout so existing installations can migrate without renaming their data.
 
+## Compatibility
 
-It's time for everyone to use alternatives as PurePerms & PureChat is outdated in a sense of the features itself and the functionality. The official alternatives that are actually better than PurePerms and PureChat are the following: [GroupsAPI](https://github.com/alvin0319/GroupsAPI) & [RankSystem](https://github.com/IvanCraft623/RankSystem)
+- Axolotl-PM API 5 (`api: [5.0.0]`), tested against the pinned 5.51.1 source in CI.
+- PHP 8.4 for the development and build toolchain.
+- JSON, SQLite3, and MySQL providers are retained.
+
+The maintained baseline is `2.1.0`. GitHub Actions produces an auditable PHAR artifact for every push and pull request; releases and tags are created separately after runtime verification.
+
+See [UPSTREAM.md](UPSTREAM.md) for provenance and the maintenance policy, and [CHANGELOG.md](CHANGELOG.md) for changes in this continuation.
 
 # Commands
 
@@ -19,7 +24,7 @@ Command | Description | Permission
 `/plperms` | Allows you to find permissions for a specific plugin. | pperms.command.plperms
 `/listranks` | Shows a list of all ranks. | pperms.command.ranks
 `/ppinfo` | Shows info about PurePerms. | pperms.command.ppinfo
-`/delrank <rank>` | Removes a rank from the rank list. | pperms.command.delrank
+`/rmrank <rank>` | Removes a rank from the rank list. | pperms.command.rmrank
 `/setrank <player> <rank> [world]` | Sets rank for the user. | pperms.command.setrank
 `/unsetuperm <rank> <permission> [world]` | Removes a permission from the user. | pperms.command.unsetuperm
 `/setuperm <player> <permission> [world]` | Adds a permission to the user. | pperms.command.setuperm
@@ -29,7 +34,15 @@ Command | Description | Permission
 - Set up permissions for different rank!
 - Multi-rank inheritance system to allow you to inherit rank permissions
 - Supports JSON, SQLITe3 + MySQL providers
-- Provides simple and flexible PurePerms usage and stable.
+- Supports multi-world rank data when enabled in `resources/config.yml`.
+- Provides simple and flexible PurePerms usage while retaining the legacy configuration format.
 
-    [GroupsAPI](https://github.com/alvin0319/GroupsAPI)
-    [RankSystem](https://github.com/IvanCraft623/RankSystem)
+## Build locally
+
+The repository uses [NhanAZ/DevTools](https://github.com/NhanAZ/DevTools) for reproducible PHAR builds and PHPStan Level Max analysis. The workflow is the canonical CI configuration. A local build from the workspace can be run with:
+
+```powershell
+php -d phar.readonly=0 .tooling/DevTools/bin/devtools.php build --project=. --out=build --overwrite --json
+```
+
+The command expects the DevTools checkout and an Axolotl-PM checkout used by the local PHPStan configuration. It does not create a GitHub release.

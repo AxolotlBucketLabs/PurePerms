@@ -25,7 +25,8 @@ class JsonProvider implements ProviderInterface
           888  888    "Y8888P"        888  888        888        "Y8888P"   "Y8888P"
     */
 
-    private $groups, $userDataFolder;
+    private Config $groups;
+    private string $userDataFolder;
 
     private PurePerms $plugin;
 
@@ -41,40 +42,34 @@ class JsonProvider implements ProviderInterface
         if(!file_exists($this->userDataFolder))
             @mkdir($this->userDataFolder, 0777, true);
     }
-    /**
-     * @param PPGroup $group
-     * @return mixed
-     */
-    public function getGroupData(PPGroup $group)
+    /** @return array<string, mixed> */
+    public function getGroupData(PPGroup $group): array
     {
         $groupName = $group->getName();
 
-        if(!isset($this->getGroupsData()[$groupName]) || !is_array($this->getGroupsData()[$groupName]))
-            return [];
-
-        return $this->getGroupsData()[$groupName];
+        return $this->getGroupsData()[$groupName] ?? [];
     }
 
     /**
      * @return Config
      */
-    public function getGroupsConfig()
+    public function getGroupsConfig(): Config
     {
         return $this->groups;
     }
-    /**
-     * @return mixed
-     */
-    public function getGroupsData()
+    /** @return array<string, array<string, mixed>> */
+    public function getGroupsData(): array
     {
-        return $this->groups->getAll();
+        $groups = $this->groups->getAll();
+        /** @var array<string, array<string, mixed>> $groups */
+        return $groups;
     }
     /**
      * @param IPlayer $player
      * @param bool $onUpdate
-     * @return array|Config
+     * @return array<string, mixed>|Config
      */
-    public function getPlayerConfig(IPlayer $player, $onUpdate = false)
+    public function getPlayerConfig(IPlayer $player, bool $onUpdate = false): array|Config
     {
         $userName = $player->getName();
 
@@ -85,7 +80,7 @@ class JsonProvider implements ProviderInterface
             {
                 return new Config($this->userDataFolder . strtolower($userName) . ".json", Config::YAML, [
                     "userName" => $userName,
-                    "group" => $this->plugin->getDefaultGroup()->getName(),
+                    "group" => $this->plugin->getDefaultGroup()?->getName() ?? "default",
                     "permissions" => [],
                     "worlds" => [],
                     "time" => -1
@@ -108,7 +103,7 @@ class JsonProvider implements ProviderInterface
             {
                 return [
                     "userName" => $userName,
-                    "group" => $this->plugin->getDefaultGroup()->getName(),
+                    "group" => $this->plugin->getDefaultGroup()?->getName() ?? "default",
                     "permissions" => [],
                     "worlds" => [],
                     "time" => -1
@@ -118,55 +113,64 @@ class JsonProvider implements ProviderInterface
     }
     /**
      * @param IPlayer $player
-     * @return array|Config
+     * @return array<string, mixed>
      */
-    public function getPlayerData(IPlayer $player)
+    public function getPlayerData(IPlayer $player): array
     {
         $userConfig = $this->getPlayerConfig($player);
 
-        return (($userConfig instanceof Config) ? $userConfig->getAll() : $userConfig);
+        if($userConfig instanceof Config)
+        {
+            /** @var array<string, mixed> $data */
+            $data = $userConfig->getAll();
+            return $data;
+        }
+
+        return $userConfig;
     }
 
-    public function getUsers()
+    public function getUsers(): ?array
     {
         // TODO: Implement getUsers() method.
+        return null;
     }
 
     /**
      * @param PPGroup $group
-     * @param array $tempGroupData
+     * @param array<string, mixed> $tempGroupData
      */
-    public function setGroupData(PPGroup $group, array $tempGroupData)
+    public function setGroupData(PPGroup $group, array $tempGroupData): void
     {
         $groupName = $group->getName();
         $this->groups->set($groupName, $tempGroupData);
         $this->groups->save();
     }
     /**
-     * @param array $tempGroupsData
+     * @param array<string, array<string, mixed>> $tempGroupsData
      */
-    public function setGroupsData(array $tempGroupsData)
+    public function setGroupsData(array $tempGroupsData): void
     {
         $this->groups->setAll($tempGroupsData);
         $this->groups->save();
     }
     /**
      * @param IPlayer $player
-     * @param array $tempUserData
+     * @param array<string, mixed> $tempUserData
      */
-    public function setPlayerData(IPlayer $player, array $tempUserData)
+    public function setPlayerData(IPlayer $player, array $tempUserData): void
     {
         $userData = $this->getPlayerConfig($player, true);
 
         if(!$userData instanceof Config)
-            throw new RuntimeException("Failed to update player data: Invalid data type (" . get_class($userData) . ")");
+            throw new RuntimeException("Failed to update player data: Invalid data type");
 
         $userData->setAll($tempUserData);
 
         $userData->save();
     }
 
-    public function close()
+    public function close(): void
     {
+        // Nothing to close for the JSON provider.
     }
 }

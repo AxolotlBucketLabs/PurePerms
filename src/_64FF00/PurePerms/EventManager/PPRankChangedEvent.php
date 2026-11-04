@@ -25,7 +25,12 @@ class PPRankChangedEvent extends PluginEvent
           888  888    "Y8888P"        888  888        888        "Y8888P"   "Y8888P"
     */
 
-    public static $handlerList = null;
+    /** @var ?\pocketmine\event\HandlerList<PPRankChangedEvent> */
+    public static ?\pocketmine\event\HandlerList $handlerList = null;
+
+    private PPGroup $group;
+    private IPlayer $player;
+    private ?string $worldName;
 
     /**
      * @param PurePerms $plugin
@@ -44,17 +49,17 @@ class PPRankChangedEvent extends PluginEvent
 	/**
      * @return PPGroup
      */
-    public function getGroup()
+    public function getGroup(): PPGroup
     {
         return $this->group;
     }
 
     /**
-     * @return World
+     * @return ?World
      */
-    public function getLevel()
+    public function getLevel(): ?World
     {
-        return $this->getPlugin()->getServer()->getWorldManager()->getWorldByName($this->worldName);
+        return $this->getPlugin() instanceof PurePerms ? $this->getPlugin()->getServer()->getWorldManager()->getWorldByName($this->worldName ?? "") : null;
     }
 
     /**
@@ -68,7 +73,7 @@ class PPRankChangedEvent extends PluginEvent
     /**
      * @return IPlayer
      */
-    public function getPlayer()
+    public function getPlayer(): IPlayer
     {
         return $this->player;
     }

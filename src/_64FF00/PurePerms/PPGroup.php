@@ -17,14 +17,16 @@ class PPGroup
           888  888    "Y8888P"        888  888        888        "Y8888P"   "Y8888P"
     */
 
-    private $name, $plugin;
-    private $parents = [];
+    private string $name;
+    private PurePerms $plugin;
+    /** @var list<PPGroup> */
+    private array $parents = [];
 
     /**
      * @param PurePerms $plugin
-     * @param $name
+     * @param string $name
      */
-    public function __construct(PurePerms $plugin, $name)
+    public function __construct(PurePerms $plugin, string $name)
     {
         $this->plugin = $plugin;
         $this->name = $name;
@@ -33,7 +35,7 @@ class PPGroup
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name;
     }
@@ -45,69 +47,65 @@ class PPGroup
     public function addParent(PPGroup $group)
     {
         $tempGroupData = $this->getData();
-        if($this === $group || in_array($this->getName(), $group->getParentGroups()))
+        if($this === $group || in_array($this, $group->getParentGroups(), true))
             return false;
-        $tempGroupData["inheritance"][] = $group->getName();
+        $inheritance = $this->stringList($tempGroupData["inheritance"] ?? null);
+        $inheritance[] = $group->getName();
+        $tempGroupData["inheritance"] = $inheritance;
         $this->setData($tempGroupData);
         $this->plugin->updatePlayersInGroup($this);
         return true;
     }
 
     /**
-     * @param $WorldName
+     * @param string $WorldName
      */
-    public function createWorldData($WorldName)
+    public function createWorldData(string $WorldName): void
     {
-        if(!isset($this->getData()["worlds"][$WorldName]))
+        $data = $this->getData();
+        if(!isset($data["worlds"]) || !is_array($data["worlds"]))
+            $data["worlds"] = [];
+        if(!isset($data["worlds"][$WorldName]))
         {
-            $tempGroupData = $this->getData();
-
-            $tempGroupData["worlds"][$WorldName] = [
+            $data["worlds"][$WorldName] = [
                 "isDefault" => false,
                 "permissions" => [
                 ]
             ];
-            $this->setData($tempGroupData);
+            $this->setData($data);
         }
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getAlias()
+    public function getAlias(): string
     {
-        if($this->getNode("alias") === null)
-            return $this->name;
-        return $this->getNode("alias");
+        $alias = $this->getNode("alias");
+        return is_string($alias) ? $alias : $this->name;
     }
 
     /**
-     * @return mixed
+     * @return array<string, mixed>
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->plugin->getProvider()->getGroupData($this);
     }
 
     /**
-     * @param null $WorldName
-     * @return array
+     * @param ?string $WorldName
+     * @return list<string>
      */
-    public function getGroupPermissions($WorldName = null)
+    public function getGroupPermissions(?string $WorldName = null): array
     {
-        $permissions = $WorldName !== null ? $this->getWorldData($WorldName)["permissions"] : $this->getNode("permissions");
-        if(!is_array($permissions))
-        {
-            $this->plugin->getLogger()->critical("Invalid 'permissions' node given to " .  __METHOD__);
-            return [];
-        }
+        $data = $WorldName !== null ? $this->getWorldData($WorldName) : $this->getData();
+        $permissions = $this->stringList($data["permissions"] ?? null);
 
         /** @var PPGroup $parentGroup */
         foreach($this->getParentGroups() as $parentGroup)
         {
             $parentPermissions = $parentGroup->getGroupPermissions($WorldName);
-            if($parentPermissions === null)
-                $parentPermissions = [];
             // Fixed by @mad-hon (https://github.com/mad-hon) / Tysm! :D
             $permissions = array_merge($parentPermissions, $permissions);
         }
@@ -115,37 +113,31 @@ class PPGroup
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @param $node
-     * @return null|mixed
+     * @param string $node
+     * @return mixed
      */
-    public function getNode($node)
+    public function getNode(string $node): mixed
     {
-        if(!isset($this->getData()[$node])) return null;
-        return $this->getData()[$node];
+        $data = $this->getData();
+        return $data[$node] ?? null;
     }
 
     /**
      * @return PPGroup[]
      */
-    public function getParentGroups()
+    public function getParentGroups(): array
     {
         if($this->parents === [])
         {
-            if(!is_array($this->getNode("inheritance")))
-            {
-                $this->plugin->getLogger()->critical("Invalid 'inheritance' node given to " . __METHOD__);
-                return [];
-            }
-
-            foreach($this->getNode("inheritance") as $parentGroupName)
+            foreach($this->stringList($this->getNode("inheritance")) as $parentGroupName)
             {
                 $parentGroup = $this->plugin->getGroup($parentGroupName);
                 if($parentGroup !== null)
@@ -157,33 +149,35 @@ class PPGroup
     }
 
     /**
-     * @param $WorldName
-     * @return null
+     * @param string $WorldName
+     * @return array<string, mixed>
      */
-    public function getWorldData($WorldName)
+    public function getWorldData(string $WorldName): array
     {
-        if($WorldName === null)
-            return null;
         $this->createWorldData($WorldName);
-        return $this->getData()["worlds"][$WorldName];
+        $worlds = $this->getData()["worlds"] ?? null;
+        if(!is_array($worlds) || !isset($worlds[$WorldName]) || !is_array($worlds[$WorldName]))
+            return [];
+        /** @var array<string, mixed> $worldData */
+        $worldData = $worlds[$WorldName];
+        return $worldData;
     }
 
     /**
-     * @param $WorldName
-     * @param $node
-     * @return null
+     * @param string $WorldName
+     * @param string $node
+     * @return mixed
      */
-    public function getWorldNode($WorldName, $node)
+    public function getWorldNode(string $WorldName, string $node): mixed
     {
-        if(!isset($this->getWorldData($WorldName)[$node])) return null;
-        return $this->getWorldData($WorldName)[$node];
+        return $this->getWorldData($WorldName)[$node] ?? null;
     }
 
     /**
-     * @param null $WorldName
+     * @param ?string $WorldName
      * @return bool
      */
-    public function isDefault($WorldName = null)
+    public function isDefault(?string $WorldName = null): bool
     {
         if($WorldName === null)
         {
@@ -196,9 +190,9 @@ class PPGroup
     }
 
     /**
-     * @param $node
+     * @param string $node
      */
-    public function removeNode($node)
+    public function removeNode(string $node): void
     {
         $tempGroupData = $this->getData();
         if(isset($tempGroupData[$node]))
@@ -216,7 +210,7 @@ class PPGroup
     public function removeParent(PPGroup $group)
     {
         $tempGroupData = $this->getData();
-        $tempGroupData["inheritance"] = array_diff($tempGroupData["inheritance"], [$group->getName()]);
+        $tempGroupData["inheritance"] = array_values(array_diff($this->stringList($tempGroupData["inheritance"] ?? null), [$group->getName()]));
         $this->setData($tempGroupData);
         $this->plugin->updatePlayersInGroup($this);
 
@@ -224,10 +218,10 @@ class PPGroup
     }
 
     /**
-     * @param $WorldName
-     * @param $node
+     * @param string $WorldName
+     * @param string $node
      */
-    public function removeWorldNode($WorldName, $node)
+    public function removeWorldNode(string $WorldName, string $node): void
     {
         $worldData = $this->getWorldData($WorldName);
         if(isset($worldData[$node]))
@@ -240,15 +234,16 @@ class PPGroup
     /**
      * @param array $data
      */
-    public function setData(array $data)
+    /** @param array<string, mixed> $data */
+    public function setData(array $data): void
     {
         $this->plugin->getProvider()->setGroupData($this, $data);
     }
 
     /**
-     * @param null $WorldName
+     * @param ?string $WorldName
      */
-    public function setDefault($WorldName = null)
+    public function setDefault(?string $WorldName = null): void
     {
         if($WorldName === null)
         {
@@ -264,22 +259,26 @@ class PPGroup
 
     /**
      * @param string $permission
-     * @param string|null $WorldName
+     * @param ?string $WorldName
      *
      * @return bool
      */
-    public function setGroupPermission($permission, $WorldName = null)
+    public function setGroupPermission(string $permission, ?string $WorldName = null): bool
     {
         if($WorldName == null)
         {
             $tempGroupData = $this->getData();
-            $tempGroupData["permissions"][] = $permission;
+            $permissions = $this->stringList($tempGroupData["permissions"] ?? null);
+            $permissions[] = $permission;
+            $tempGroupData["permissions"] = $permissions;
             $this->setData($tempGroupData);
         }
         else
         {
             $worldData = $this->getWorldData($WorldName);
-            $worldData["permissions"][] = $permission;
+            $permissions = $this->stringList($worldData["permissions"] ?? null);
+            $permissions[] = $permission;
+            $worldData["permissions"] = $permissions;
             $this->setWorldData($WorldName, $worldData);
         }
         $this->plugin->updatePlayersInGroup($this);
@@ -288,10 +287,10 @@ class PPGroup
     }
 
     /**
-     * @param $node
-     * @param $value
+     * @param string $node
+     * @param mixed $value
      */
-    public function setNode($node, $value)
+    public function setNode(string $node, mixed $value): void
     {
         $tempGroupData = $this->getData();
         $tempGroupData[$node] = $value;
@@ -299,78 +298,107 @@ class PPGroup
     }
 
     /**
-     * @param $WorldName
-     * @param array $worldData
+     * @param string $WorldName
+     * @param array<string, mixed> $worldData
      */
-    public function setWorldData($WorldName, array $worldData)
+    public function setWorldData(string $WorldName, array $worldData): void
     {
-        if(isset($this->getData()["worlds"][$WorldName]))
+        $tempGroupData = $this->getData();
+        $worlds = $tempGroupData["worlds"] ?? null;
+        if(is_array($worlds))
         {
-            $tempGroupData = $this->getData();
-            $tempGroupData["worlds"][$WorldName] = $worldData;
+            $worlds[$WorldName] = $worldData;
+            $tempGroupData["worlds"] = $worlds;
             $this->setData($tempGroupData);
         }
     }
 
     /**
-     * @param $WorldName
-     * @param $node
-     * @param $value
+     * @param string $WorldName
+     * @param string $node
+     * @param mixed $value
      */
-    public function setWorldNode($WorldName, $node, $value)
+    public function setWorldNode(string $WorldName, string $node, mixed $value): void
     {
         $worldData = $this->getWorldData($WorldName);
         $worldData[$node] = $value;
         $this->setWorldData($WorldName, $worldData);
     }
 
-    public function sortPermissions()
+    public function sortPermissions(): void
     {
         $tempGroupData = $this->getData();
         if(isset($tempGroupData["permissions"]))
         {
+            $tempGroupData["permissions"] = $this->stringList($tempGroupData["permissions"]);
             $tempGroupData["permissions"] = array_unique($tempGroupData["permissions"]);
             sort($tempGroupData["permissions"]);
         }
         
         $isMultiWorldPermsEnabled = $this->plugin->getConfigValue("enable-multiworld-perms");
-        if($isMultiWorldPermsEnabled and isset($tempGroupData["worlds"]))
+        $worlds = $tempGroupData["worlds"] ?? null;
+        if($isMultiWorldPermsEnabled === true && is_array($worlds))
         {
             foreach($this->plugin->getServer()->getWorldManager()->getWorlds() as $world)
             {
                 $WorldName = $world->getDisplayName();
-                if(isset($tempGroupData["worlds"][$WorldName]))
+                if(isset($worlds[$WorldName]) && is_array($worlds[$WorldName]))
                 {
-                    $tempGroupData["worlds"][$WorldName]["permissions"] = array_unique($tempGroupData["worlds"][$WorldName]["permissions"]);
-                    sort($tempGroupData["worlds"][$WorldName]["permissions"]);
+                    $worldData = $worlds[$WorldName];
+                    $worldData["permissions"] = $this->stringList($worldData["permissions"] ?? null);
+                    $worldData["permissions"] = array_values(array_unique($worldData["permissions"]));
+                    sort($worldData["permissions"]);
+                    $worlds[$WorldName] = $worldData;
                 }
             }
+            $tempGroupData["worlds"] = $worlds;
         }
         $this->setData($tempGroupData);
     }
 
     /**
-     * @param $permission
-     * @param null $levelName
+     * @param string $permission
+     * @param ?string $WorldName
      * @return bool
      */
-    public function unsetGroupPermission($permission, $WorldName = null)
+    public function unsetGroupPermission(string $permission, ?string $WorldName = null): bool
     {
         if($WorldName == null)
         {
             $tempGroupData = $this->getData();
-            if(!in_array($permission, $tempGroupData["permissions"])) return false;
-            $tempGroupData["permissions"] = array_diff($tempGroupData["permissions"], [$permission]);
+            $permissions = $this->stringList($tempGroupData["permissions"] ?? null);
+            if(!in_array($permission, $permissions, true)) return false;
+            $tempGroupData["permissions"] = array_values(array_diff($permissions, [$permission]));
             $this->setData($tempGroupData);
         }
         else
         {
             $worldData = $this->getWorldData($WorldName);
-            if(!in_array($permission, $worldData["permissions"])) return false;
-            $worldData["permissions"] = array_diff($worldData["permissions"], [$permission]);
+            $permissions = $this->stringList($worldData["permissions"] ?? null);
+            if(!in_array($permission, $permissions, true)) return false;
+            $worldData["permissions"] = array_values(array_diff($permissions, [$permission]));
             $this->setWorldData($WorldName, $worldData);
         }
         $this->plugin->updatePlayersInGroup($this);
         return true;
+    }
+
+    /**
+     * @param mixed $value
+     * @return list<string>
+     */
+    private function stringList(mixed $value): array
+    {
+        if(!is_array($value))
+            return [];
+
+        $result = [];
+        foreach($value as $item)
+        {
+            if(is_string($item))
+                $result[] = $item;
+        }
+
+        return $result;
     }
 }

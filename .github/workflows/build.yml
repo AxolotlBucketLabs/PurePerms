@@ -1,0 +1,77 @@
+name: Analyze and build PurePerms
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pureperms-build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Analyze and build downloadable PHAR
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out PurePerms
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check out Axolotl-PM source for PHPStan
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: axolotl-pm/PocketMine-MP
+          ref: e881fc1bc1c401545baf6bd1f824e41ff3f57bd1 # Axolotl-PM 5.51.1
+          path: .devtools-servers/axolotl
+          persist-credentials: false
+
+      - name: Check out Axolotl-PM PHP setup helper
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: axolotl-pm/setup-php-action
+          ref: b8c3f9add4f2ad4a5e2624a1112aba899ee8db0e
+          path: .devtools-dependencies/setup-php-action
+          persist-credentials: false
+
+      - name: Set up Axolotl-PM PHP with Node 24
+        shell: bash
+        env:
+          INPUT_PHP-VERSION: "8.4"
+          INPUT_PM-VERSION-MAJOR: "5"
+          INPUT_INSTALL-PATH: ./.php-bin
+        run: node .devtools-dependencies/setup-php-action/dist/index.js
+
+      - name: Analyze and build with DevTools
+        id: build
+        uses: NhanAZ/DevTools@8b7db655845dc5d9e5e51b26a5d0815d5f7e5323 # v2.1.1
+        with:
+          project: .
+          output: build
+          phpstan: max
+          phpstan-server: .devtools-servers/axolotl
+
+      - name: Verify PHAR checksum and metadata
+        shell: bash
+        env:
+          PHAR_PATH: ${{ steps.build.outputs.phar }}
+          EXPECTED_SHA256: ${{ steps.build.outputs.sha256 }}
+          BUILD_METADATA: ${{ steps.build.outputs.metadata }}
+        run: |
+          set -euo pipefail
+          test -f "$PHAR_PATH"
+          test -f "$BUILD_METADATA"
+          test "$(sha256sum "$PHAR_PATH" | cut -d ' ' -f 1)" = "$EXPECTED_SHA256"
+
+      - name: Upload PHAR artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: PurePerms-${{ github.sha }}
+          path: |
+            ${{ steps.build.outputs.phar }}
+            ${{ steps.build.outputs.metadata }}
+          if-no-files-found: error

@@ -25,7 +25,9 @@ class DefaultProvider implements ProviderInterface
           888  888    "Y8888P"        888  888        888        "Y8888P"   "Y8888P"
     */
 
-    private $groups, $players, $plugin;
+    private Config $groups;
+    private Config $players;
+    private PurePerms $plugin;
 
     /**
      * @param PurePerms $plugin
@@ -42,51 +44,53 @@ class DefaultProvider implements ProviderInterface
         $this->players = new Config($this->plugin->getDataFolder() . "players.yml", Config::YAML);
     }
 
-    /**
-     * @param PPGroup $group
-     * @return mixed
-     */
-    public function getGroupData(PPGroup $group)
+    /** @return array<string, mixed> */
+    public function getGroupData(PPGroup $group): array
     {
         $groupName = $group->getName();
-        if(!isset($this->getGroupsData()[$groupName]) || !is_array($this->getGroupsData()[$groupName])) return [];
-        return $this->getGroupsData()[$groupName];
+        return $this->getGroupsData()[$groupName] ?? [];
     }
 
-    /**
-     * @return mixed
-     */
-    public function getGroupsConfig()
+    public function getGroupsConfig(): Config
     {
         return $this->groups;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getGroupsData()
+    /** @return array<string, array<string, mixed>> */
+    public function getGroupsData(): array
     {
-        return $this->groups->getAll();
+        $groups = $this->groups->getAll();
+        /** @var array<string, array<string, mixed>> $groups */
+        return $groups;
     }
 
-    public function getPlayerData(IPlayer $player)
+    public function getPlayerData(IPlayer $player): array
     {
         $userName = strtolower($player->getName());
 
         if(!$this->players->exists($userName))
         {
             return [
-                "group" => $this->plugin->getDefaultGroup()->getName(),
+                "group" => $this->plugin->getDefaultGroup()?->getName() ?? "default",
                 "permissions" => [],
                 "worlds" => [],
                 "time" => -1
             ];
         }
 
-        return $this->players->get($userName);
+        $data = $this->players->get($userName);
+        if(!is_array($data))
+            return [];
+        $result = [];
+        foreach($data as $key => $value)
+        {
+            if(is_string($key))
+                $result[$key] = $value;
+        }
+        return $result;
     }
 
-    public function getUsers()
+    public function getUsers(): ?array
     {
         /*
         if(empty($this->players->getAll()))
@@ -94,13 +98,14 @@ class DefaultProvider implements ProviderInterface
 
         return $this->players->getAll();
         */
+        return null;
     }
 
     /**
      * @param PPGroup $group
-     * @param array $tempGroupData
+     * @param array<string, mixed> $tempGroupData
      */
-    public function setGroupData(PPGroup $group, array $tempGroupData)
+    public function setGroupData(PPGroup $group, array $tempGroupData): void
     {
         $groupName = $group->getName();
         $this->groups->set($groupName, $tempGroupData);
@@ -108,9 +113,9 @@ class DefaultProvider implements ProviderInterface
     }
 
     /**
-     * @param array $tempGroupsData
+     * @param array<string, array<string, mixed>> $tempGroupsData
      */
-    public function setGroupsData(array $tempGroupsData)
+    public function setGroupsData(array $tempGroupsData): void
     {
         $this->groups->setAll($tempGroupsData);
         $this->groups->save();
@@ -118,15 +123,15 @@ class DefaultProvider implements ProviderInterface
 
     /**
      * @param IPlayer $player
-     * @param array $tempUserData
+     * @param array<string, mixed> $tempUserData
      */
-    public function setPlayerData(IPlayer $player, array $tempUserData)
+    public function setPlayerData(IPlayer $player, array $tempUserData): void
     {
         $userName = strtolower($player->getName());
         if(!$this->players->exists($userName))
         {
             $this->players->set($userName, [
-                "group" => $this->plugin->getDefaultGroup()->getName(),
+                "group" => $this->plugin->getDefaultGroup()?->getName() ?? "default",
                 "permissions" => [],
                 "worlds" => [],
                 "time" => -1
@@ -139,7 +144,8 @@ class DefaultProvider implements ProviderInterface
         $this->players->save();
     }
 
-    public function close()
+    public function close(): void
     {
+        // Nothing to close for the file-backed provider.
     }
 }
