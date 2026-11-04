@@ -144,6 +144,12 @@ class DefaultProvider implements ProviderInterface
         $this->players->save();
     }
 
+    public function reload(): void
+    {
+        $this->groups->reload();
+        $this->players->reload();
+    }
+
     public function close(): void
     {
         // Nothing to close for the file-backed provider.

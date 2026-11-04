@@ -1,0 +1,106 @@
+---
+messages-version: "2.1.0"
+language: "kor"
+cmds:
+  addrank:
+    desc: "새 랭크를 추가합니다."
+    usage: "사용법: /addrank <랭크>"
+    messages:
+      rank_added_successfully: "%var0% 랭크를 성공적으로 추가했습니다."
+      rank_already_exists: "%var0% 랭크는 이미 존재합니다."
+      invalid_rank_name: "잘못된 랭크 이름입니다."
+  defrank:
+    desc: "기본 랭크를 설정합니다."
+    usage: "사용법: /defrank <랭크> [월드]"
+    messages:
+      defrank_successfully: "기본 랭크를 %var0%로 설정했습니다."
+      rank_not_exist: "%var0% 랭크가 존재하지 않습니다."
+      level_not_exist: "%var0% 월드가 존재하지 않습니다."
+  plperms:
+    desc: "플러그인의 권한 목록을 표시합니다."
+    usage: "사용법: /plperms <플러그인> [페이지]"
+    messages:
+      no_plugin_perms: "%var0% 플러그인에는 권한이 없습니다."
+      plugin_not_exist: "%var0% 플러그인이 존재하지 않습니다."
+      plugin_perms_list: "%var0% 플러그인 권한 목록 (%var1% / %var2%):"
+  fperms:
+    desc: "플러그인의 권한 목록을 표시합니다."
+    usage: "사용법: /fperms <플러그인> [페이지]"
+    messages:
+      no_plugin_perms: "%var0% 플러그인에는 권한이 없습니다."
+      plugin_not_exist: "%var0% 플러그인이 존재하지 않습니다."
+      plugin_perms_list: "%var0% 플러그인 권한 목록 (%var1% / %var2%):"
+  setgperm:
+    desc: "그룹에 권한을 추가합니다."
+    usage: "사용법: /setgperm <그룹> <권한> [월드]"
+    messages:
+      group_not_exist: "%var0% 그룹이 존재하지 않습니다."
+      level_not_exist: "%var0% 월드가 존재하지 않습니다."
+      gperm_added_successfully: "%var0% 권한을 그룹에 추가했습니다."
+  unsetgperm:
+    desc: "그룹에서 권한을 제거합니다."
+    usage: "사용법: /unsetgperm <그룹> <권한> [월드]"
+    messages:
+      group_not_exist: "%var0% 그룹이 존재하지 않습니다."
+      level_not_exist: "%var0% 월드가 존재하지 않습니다."
+      gperm_not_found: "그룹에 %var0% 권한이 없습니다."
+      gperm_removed_successfully: "그룹에서 %var0% 권한을 제거했습니다."
+  ppreload:
+    desc: "PurePerms 데이터와 메시지를 다시 불러옵니다."
+    messages:
+      successfully_reloaded: "PurePerms 데이터와 메시지를 다시 불러왔습니다."
+      failed: "PurePerms를 다시 불러오지 못했습니다. 서버 로그를 확인하세요."
+  ranks:
+    desc: "모든 랭크를 표시합니다."
+    messages:
+      all_registered_ranks: "등록된 랭크: %var0%"
+  ppinfo:
+    desc: "PurePerms 정보를 표시합니다."
+    messages:
+      ppinfo_console: "PurePerms v%var0% (제작자 %var1%)를 사용 중입니다."
+      ppinfo_player: "이 서버는 PurePerms v%var0% (제작자 %var1%)를 사용합니다."
+  rmrank:
+    desc: "랭크 목록에서 랭크를 제거합니다."
+    usage: "사용법: /rmrank <랭크>"
+    messages:
+      ranks_removed_successfully: "%var0% 랭크를 제거했습니다."
+      ranks_not_exist: "%var0% 랭크가 존재하지 않습니다."
+      invalid_ranks_name: "잘못된 랭크 이름입니다."
+  setrank:
+    desc: "플레이어의 랭크를 설정합니다."
+    usage: "사용법: /setrank <플레이어> <랭크> <기간> [월드]"
+    messages:
+      access_denied_01: "%var0% 랭크를 설정할 권한이 없습니다."
+      access_denied_02: "%var0% 랭크를 가진 플레이어의 랭크를 변경할 수 없습니다."
+      rank_not_exist: "%var0% 랭크가 존재하지 않습니다."
+      level_not_exist: "%var0% 월드가 존재하지 않습니다."
+      invalid_exp_time: "%var0% 기간이 잘못되었습니다. permanent, 1d2h3m, 2h 또는 30m을 사용하세요."
+      on_player_ranks_change: "랭크가 %var0%로 변경되었습니다!"
+      setrank_successfully: "%var0% 플레이어의 랭크를 설정했습니다."
+  setuperm:
+    desc: "플레이어에게 권한을 추가합니다."
+    usage: "사용법: /setuperm <플레이어> <권한> [월드]"
+    messages:
+      level_not_exist: "%var0% 월드가 존재하지 않습니다."
+      uperm_added_successfully: "%var1% 플레이어에게 %var0% 권한을 추가했습니다."
+  unsetuperm:
+    desc: "플레이어의 권한을 제거합니다."
+    usage: "사용법: /unsetuperm <플레이어> <권한> [월드]"
+    messages:
+      level_not_exist: "%var0% 월드가 존재하지 않습니다."
+      uperm_removed_successfully: "%var1% 플레이어에게서 %var0% 권한을 제거했습니다."
+logger_messages:
+  language_selected: "PurePerms 언어를 '%var0%'로 설정했습니다."
+  getConfigValue_01: "config.yml에서 %var0% 키를 찾을 수 없습니다."
+  getDefaultGroup_01: "랭크 파일에 기본 랭크가 여러 개 지정되었습니다."
+  getDefaultGroup_02: "기본 랭크를 찾을 수 없습니다."
+  getDefaultGroup_03: "기본 랭크를 자동으로 설정합니다."
+  getGroup_01: "%var0% 그룹을 찾을 수 없습니다."
+  getGroup_02: "%var0% 그룹의 데이터가 잘못되었거나 손상되었습니다."
+  registerPlayer: "%var0% 플레이어를 등록하는 중..."
+  setProvider_MySQL: "데이터 provider를 MySQL로 설정했습니다."
+  setProvider_JSON: "데이터 provider를 JSON으로 설정했습니다."
+  setProvider_SQLITE3: "데이터 provider를 SQLite3로 설정했습니다."
+  setProvider_NotFound: "%var0% provider가 없습니다. 기본 provider를 사용합니다."
+  unregisterPlayer: "%var0% 플레이어 등록을 해제하는 중..."
+  YAMLProvider_InvalidGroupsSettings: "잘못된 ranks.yml 설정입니다. 파일을 확인하세요."

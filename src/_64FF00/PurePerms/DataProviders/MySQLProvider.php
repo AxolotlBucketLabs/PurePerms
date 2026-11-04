@@ -399,6 +399,11 @@ class MySQLProvider implements ProviderInterface
         }
     }
     
+    public function reload(): void
+    {
+        $this->loadGroupsData();
+    }
+
     public function close(): void
     {
         $this->db->close();

@@ -24,6 +24,9 @@ permissions:
   pperms.command.plperms:
     default: op
     description: "Allows you to find permissions for a specific plugin."
+  pperms.command.fperms:
+    default: op
+    description: "Allows you to find permissions for a specific plugin using the legacy /fperms command."
   pperms.command.ranks:
     default: op
     description: "Allows you to see a list of all rank."
@@ -42,9 +45,15 @@ permissions:
   pperms.command.setuperm:
     default: op
     description: "Allows you to add a permission to a user."
+  pperms.command.setgperm:
+    default: op
+    description: "Allows you to add a permission to a group."
   pperms.command.unsetgperm:
     default: op
     description: "Allows you to remove a permission from the group."
   pperms.command.unsetuperm:
     default: op
     description: "Allows you to remove a permission from the user."
+  pperms.command.ppreload:
+    default: op
+    description: "Allows you to reload PurePerms data and messages."

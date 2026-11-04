@@ -1,0 +1,106 @@
+---
+messages-version: "2.1.0"
+language: "fra"
+cmds:
+  addrank:
+    desc: "Ajoute un nouveau rang."
+    usage: "Utilisation : /addrank <rang>"
+    messages:
+      rank_added_successfully: "Le rang %var0% a été ajouté."
+      rank_already_exists: "Le rang %var0% existe déjà."
+      invalid_rank_name: "Nom de rang invalide."
+  defrank:
+    desc: "Définit le rang par défaut."
+    usage: "Utilisation : /defrank <rang> [monde]"
+    messages:
+      defrank_successfully: "Le rang par défaut est maintenant %var0%."
+      rank_not_exist: "Le rang %var0% n'existe pas."
+      level_not_exist: "Le monde %var0% n'existe pas."
+  plperms:
+    desc: "Affiche les permissions d'un plugin."
+    usage: "Utilisation : /plperms <plugin> [page]"
+    messages:
+      no_plugin_perms: "Le plugin %var0% n'a aucune permission."
+      plugin_not_exist: "Le plugin %var0% n'existe pas."
+      plugin_perms_list: "Permissions du plugin %var0% (page %var1% / %var2%) :"
+  fperms:
+    desc: "Affiche les permissions d'un plugin."
+    usage: "Utilisation : /fperms <plugin> [page]"
+    messages:
+      no_plugin_perms: "Le plugin %var0% n'a aucune permission."
+      plugin_not_exist: "Le plugin %var0% n'existe pas."
+      plugin_perms_list: "Permissions du plugin %var0% (page %var1% / %var2%) :"
+  setgperm:
+    desc: "Ajoute une permission à un groupe."
+    usage: "Utilisation : /setgperm <groupe> <permission> [monde]"
+    messages:
+      group_not_exist: "Le groupe %var0% n'existe pas."
+      level_not_exist: "Le monde %var0% n'existe pas."
+      gperm_added_successfully: "La permission %var0% a été ajoutée au groupe."
+  unsetgperm:
+    desc: "Retire une permission d'un groupe."
+    usage: "Utilisation : /unsetgperm <groupe> <permission> [monde]"
+    messages:
+      group_not_exist: "Le groupe %var0% n'existe pas."
+      level_not_exist: "Le monde %var0% n'existe pas."
+      gperm_not_found: "Le groupe ne possède pas la permission %var0%."
+      gperm_removed_successfully: "La permission %var0% a été retirée du groupe."
+  ppreload:
+    desc: "Recharge les données et les messages de PurePerms."
+    messages:
+      successfully_reloaded: "Les données et les messages de PurePerms ont été rechargés."
+      failed: "PurePerms n'a pas pu être rechargé. Consultez le journal du serveur."
+  ranks:
+    desc: "Affiche tous les rangs."
+    messages:
+      all_registered_ranks: "Rangs enregistrés : %var0%"
+  ppinfo:
+    desc: "Affiche les informations de PurePerms."
+    messages:
+      ppinfo_console: "Vous utilisez PurePerms v%var0% par %var1%."
+      ppinfo_player: "Ce serveur utilise PurePerms v%var0% par %var1%."
+  rmrank:
+    desc: "Supprime un rang de la liste."
+    usage: "Utilisation : /rmrank <rang>"
+    messages:
+      ranks_removed_successfully: "Le rang %var0% a été supprimé."
+      ranks_not_exist: "Le rang %var0% n'existe pas."
+      invalid_ranks_name: "Nom de rang invalide."
+  setrank:
+    desc: "Définit le rang d'un joueur."
+    usage: "Utilisation : /setrank <joueur> <rang> <durée> [monde]"
+    messages:
+      access_denied_01: "Vous ne pouvez pas attribuer le rang %var0%."
+      access_denied_02: "Vous ne pouvez pas modifier le rang d'un joueur ayant %var0%."
+      rank_not_exist: "Le rang %var0% n'existe pas."
+      level_not_exist: "Le monde %var0% n'existe pas."
+      invalid_exp_time: "La durée %var0% est invalide. Utilisez permanent, 1d2h3m, 2h ou 30m."
+      on_player_ranks_change: "Votre rang est devenu %var0% !"
+      setrank_successfully: "Le rang de %var0% a été défini."
+  setuperm:
+    desc: "Ajoute une permission à un joueur."
+    usage: "Utilisation : /setuperm <joueur> <permission> [monde]"
+    messages:
+      level_not_exist: "Le monde %var0% n'existe pas."
+      uperm_added_successfully: "La permission %var0% a été ajoutée à %var1%."
+  unsetuperm:
+    desc: "Retire une permission d'un joueur."
+    usage: "Utilisation : /unsetuperm <joueur> <permission> [monde]"
+    messages:
+      level_not_exist: "Le monde %var0% n'existe pas."
+      uperm_removed_successfully: "La permission %var0% a été retirée de %var1%."
+logger_messages:
+  language_selected: "Langue de PurePerms définie sur '%var0%'."
+  getConfigValue_01: "Clé %var0% absente de config.yml."
+  getDefaultGroup_01: "Plusieurs rangs par défaut ont été déclarés."
+  getDefaultGroup_02: "Aucun rang par défaut n'a été trouvé."
+  getDefaultGroup_03: "Définition automatique du rang par défaut."
+  getGroup_01: "Groupe %var0% introuvable."
+  getGroup_02: "Les données du groupe %var0% sont invalides ou corrompues."
+  registerPlayer: "Enregistrement du joueur %var0%..."
+  setProvider_MySQL: "Provider de données : MySQL."
+  setProvider_JSON: "Provider de données : JSON."
+  setProvider_SQLITE3: "Provider de données : SQLite3."
+  setProvider_NotFound: "Le provider %var0% n'existe pas. Utilisation du provider par défaut."
+  unregisterPlayer: "Désenregistrement du joueur %var0%..."
+  YAMLProvider_InvalidGroupsSettings: "Paramètres ranks.yml invalides. Vérifiez le fichier."

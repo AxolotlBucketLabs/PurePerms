@@ -42,5 +42,8 @@ interface ProviderInterface
     /** @param array<string, mixed> $tempPlayerData */
     public function setPlayerData(IPlayer $player, array $tempPlayerData): void;
 
+    /** Reload provider-backed data without replacing the provider instance. */
+    public function reload(): void;
+
     public function close(): void;
 }

@@ -1,0 +1,106 @@
+---
+messages-version: "2.1.0"
+language: "jpn"
+cmds:
+  addrank:
+    desc: "新しいランクを追加します。"
+    usage: "使用法: /addrank <ランク>"
+    messages:
+      rank_added_successfully: "%var0% をランクリストに追加しました。"
+      rank_already_exists: "ランク %var0% はすでに存在します。"
+      invalid_rank_name: "無効なランク名です。"
+  defrank:
+    desc: "デフォルトランクを設定します。"
+    usage: "使用法: /defrank <ランク> [ワールド]"
+    messages:
+      defrank_successfully: "デフォルトランクを %var0% に設定しました。"
+      rank_not_exist: "ランク %var0% は存在しません。"
+      level_not_exist: "ワールド %var0% は存在しません。"
+  plperms:
+    desc: "指定したプラグインの権限を表示します。"
+    usage: "使用法: /plperms <プラグイン> [ページ]"
+    messages:
+      no_plugin_perms: "プラグイン %var0% に権限はありません。"
+      plugin_not_exist: "プラグイン %var0% は存在しません。"
+      plugin_perms_list: "%var0% の権限一覧（%var1% / %var2% ページ）:"
+  fperms:
+    desc: "指定したプラグインの権限を表示します。"
+    usage: "使用法: /fperms <プラグイン> [ページ]"
+    messages:
+      no_plugin_perms: "プラグイン %var0% に権限はありません。"
+      plugin_not_exist: "プラグイン %var0% は存在しません。"
+      plugin_perms_list: "%var0% の権限一覧（%var1% / %var2% ページ）:"
+  setgperm:
+    desc: "グループに権限を追加します。"
+    usage: "使用法: /setgperm <グループ> <権限> [ワールド]"
+    messages:
+      group_not_exist: "グループ %var0% は存在しません。"
+      level_not_exist: "ワールド %var0% は存在しません。"
+      gperm_added_successfully: "権限 %var0% をグループに追加しました。"
+  unsetgperm:
+    desc: "グループから権限を削除します。"
+    usage: "使用法: /unsetgperm <グループ> <権限> [ワールド]"
+    messages:
+      group_not_exist: "グループ %var0% は存在しません。"
+      level_not_exist: "ワールド %var0% は存在しません。"
+      gperm_not_found: "グループに権限 %var0% はありません。"
+      gperm_removed_successfully: "グループから権限 %var0% を削除しました。"
+  ppreload:
+    desc: "PurePerms のデータとメッセージを再読み込みします。"
+    messages:
+      successfully_reloaded: "PurePerms のデータとメッセージを再読み込みしました。"
+      failed: "PurePerms を再読み込みできませんでした。サーバーログを確認してください。"
+  ranks:
+    desc: "すべてのランクを表示します。"
+    messages:
+      all_registered_ranks: "登録済みランク: %var0%"
+  ppinfo:
+    desc: "PurePerms の情報を表示します。"
+    messages:
+      ppinfo_console: "%var1% による PurePerms v%var0% を使用しています。"
+      ppinfo_player: "このサーバーは %var1% による PurePerms v%var0% を使用しています。"
+  rmrank:
+    desc: "ランクリストからランクを削除します。"
+    usage: "使用法: /rmrank <ランク>"
+    messages:
+      ranks_removed_successfully: "ランク %var0% を削除しました。"
+      ranks_not_exist: "ランク %var0% は存在しません。"
+      invalid_ranks_name: "無効なランク名です。"
+  setrank:
+    desc: "プレイヤーのランクを設定します。"
+    usage: "使用法: /setrank <プレイヤー> <ランク> <期間> [ワールド]"
+    messages:
+      access_denied_01: "ランク %var0% を設定する権限がありません。"
+      access_denied_02: "%var0% ランクを持つプレイヤーのランクは変更できません。"
+      rank_not_exist: "ランク %var0% は存在しません。"
+      level_not_exist: "ワールド %var0% は存在しません。"
+      invalid_exp_time: "期間 %var0% は無効です。permanent、1d2h3m、2h、30m を使用してください。"
+      on_player_ranks_change: "ランクが %var0% に変更されました！"
+      setrank_successfully: "%var0% のランクを設定しました。"
+  setuperm:
+    desc: "プレイヤーに権限を追加します。"
+    usage: "使用法: /setuperm <プレイヤー> <権限> [ワールド]"
+    messages:
+      level_not_exist: "ワールド %var0% は存在しません。"
+      uperm_added_successfully: "%var1% に権限 %var0% を追加しました。"
+  unsetuperm:
+    desc: "プレイヤーの権限を削除します。"
+    usage: "使用法: /unsetuperm <プレイヤー> <権限> [ワールド]"
+    messages:
+      level_not_exist: "ワールド %var0% は存在しません。"
+      uperm_removed_successfully: "%var1% から権限 %var0% を削除しました。"
+logger_messages:
+  language_selected: "PurePerms の言語を '%var0%' に設定しました。"
+  getConfigValue_01: "config.yml にキー %var0% がありません。"
+  getDefaultGroup_01: "複数のデフォルトランクが指定されています。"
+  getDefaultGroup_02: "デフォルトランクが見つかりません。"
+  getDefaultGroup_03: "デフォルトランクを自動設定します。"
+  getGroup_01: "グループ %var0% が見つかりません。"
+  getGroup_02: "グループ %var0% のデータが無効または破損しています。"
+  registerPlayer: "プレイヤー %var0% を登録しています..."
+  setProvider_MySQL: "データ provider を MySQL に設定しました。"
+  setProvider_JSON: "データ provider を JSON に設定しました。"
+  setProvider_SQLITE3: "データ provider を SQLite3 に設定しました。"
+  setProvider_NotFound: "Provider %var0% は存在しません。デフォルト provider を使用します。"
+  unregisterPlayer: "プレイヤー %var0% の登録を解除しています..."
+  YAMLProvider_InvalidGroupsSettings: "ranks.yml の設定が無効です。ファイルを確認してください。"

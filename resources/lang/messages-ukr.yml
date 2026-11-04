@@ -1,0 +1,106 @@
+---
+messages-version: "2.1.0"
+language: "ukr"
+cmds:
+  addrank:
+    desc: "Додає новий ранг."
+    usage: "Використання: /addrank <ранг>"
+    messages:
+      rank_added_successfully: "Ранг %var0% успішно додано."
+      rank_already_exists: "Ранг %var0% вже існує."
+      invalid_rank_name: "Некоректна назва рангу."
+  defrank:
+    desc: "Встановлює ранг за замовчуванням."
+    usage: "Використання: /defrank <ранг> [світ]"
+    messages:
+      defrank_successfully: "Ранг за замовчуванням встановлено: %var0%."
+      rank_not_exist: "Ранг %var0% не існує."
+      level_not_exist: "Світ %var0% не існує."
+  plperms:
+    desc: "Показує дозволи вказаного плагіна."
+    usage: "Використання: /plperms <плагін> [сторінка]"
+    messages:
+      no_plugin_perms: "Плагін %var0% не має дозволів."
+      plugin_not_exist: "Плагін %var0% не існує."
+      plugin_perms_list: "Дозволи плагіна %var0% (сторінка %var1% з %var2%):"
+  fperms:
+    desc: "Показує дозволи вказаного плагіна."
+    usage: "Використання: /fperms <плагін> [сторінка]"
+    messages:
+      no_plugin_perms: "Плагін %var0% не має дозволів."
+      plugin_not_exist: "Плагін %var0% не існує."
+      plugin_perms_list: "Дозволи плагіна %var0% (сторінка %var1% з %var2%):"
+  setgperm:
+    desc: "Додає дозвіл групі."
+    usage: "Використання: /setgperm <група> <дозвіл> [світ]"
+    messages:
+      group_not_exist: "Група %var0% не існує."
+      level_not_exist: "Світ %var0% не існує."
+      gperm_added_successfully: "Дозвіл %var0% додано групі."
+  unsetgperm:
+    desc: "Видаляє дозвіл групи."
+    usage: "Використання: /unsetgperm <група> <дозвіл> [світ]"
+    messages:
+      group_not_exist: "Група %var0% не існує."
+      level_not_exist: "Світ %var0% не існує."
+      gperm_not_found: "У групи немає дозволу %var0%."
+      gperm_removed_successfully: "Дозвіл %var0% видалено з групи."
+  ppreload:
+    desc: "Перезавантажує дані та повідомлення PurePerms."
+    messages:
+      successfully_reloaded: "Дані та повідомлення PurePerms успішно перезавантажено."
+      failed: "Не вдалося перезавантажити PurePerms. Перевірте журнал сервера."
+  ranks:
+    desc: "Показує всі ранги."
+    messages:
+      all_registered_ranks: "Зареєстровані ранги: %var0%"
+  ppinfo:
+    desc: "Показує інформацію про PurePerms."
+    messages:
+      ppinfo_console: "Ви використовуєте PurePerms v%var0% від %var1%."
+      ppinfo_player: "Цей сервер використовує PurePerms v%var0% від %var1%."
+  rmrank:
+    desc: "Видаляє ранг зі списку."
+    usage: "Використання: /rmrank <ранг>"
+    messages:
+      ranks_removed_successfully: "Ранг %var0% успішно видалено."
+      ranks_not_exist: "Ранг %var0% не існує."
+      invalid_ranks_name: "Некоректна назва рангу."
+  setrank:
+    desc: "Встановлює ранг гравцю."
+    usage: "Використання: /setrank <гравець> <ранг> <термін> [світ]"
+    messages:
+      access_denied_01: "Ви не маєте права призначати ранг %var0%."
+      access_denied_02: "Не можна змінити ранг гравця з рангом %var0%."
+      rank_not_exist: "Ранг %var0% не існує."
+      level_not_exist: "Світ %var0% не існує."
+      invalid_exp_time: "Термін %var0% некоректний. Використовуйте permanent, 1d2h3m, 2h або 30m."
+      on_player_ranks_change: "Ваш ранг змінено на %var0%!"
+      setrank_successfully: "Ранг гравця %var0% успішно змінено."
+  setuperm:
+    desc: "Додає дозвіл гравцю."
+    usage: "Використання: /setuperm <гравець> <дозвіл> [світ]"
+    messages:
+      level_not_exist: "Світ %var0% не існує."
+      uperm_added_successfully: "Дозвіл %var0% додано гравцю %var1%."
+  unsetuperm:
+    desc: "Видаляє дозвіл гравця."
+    usage: "Використання: /unsetuperm <гравець> <дозвіл> [світ]"
+    messages:
+      level_not_exist: "Світ %var0% не існує."
+      uperm_removed_successfully: "Дозвіл %var0% видалено у гравця %var1%."
+logger_messages:
+  language_selected: "Мову PurePerms встановлено: '%var0%'."
+  getConfigValue_01: "Ключ %var0% не знайдено в config.yml."
+  getDefaultGroup_01: "У файлі рангів оголошено кілька рангів за замовчуванням."
+  getDefaultGroup_02: "Ранг за замовчуванням не знайдено."
+  getDefaultGroup_03: "Ранг за замовчуванням встановлюється автоматично."
+  getGroup_01: "Групу %var0% не знайдено."
+  getGroup_02: "Дані групи %var0% некоректні або пошкоджені."
+  registerPlayer: "Реєстрація гравця %var0%..."
+  setProvider_MySQL: "Provider даних: MySQL."
+  setProvider_JSON: "Provider даних: JSON."
+  setProvider_SQLITE3: "Provider даних: SQLite3."
+  setProvider_NotFound: "Provider %var0% не існує. Використовується стандартний provider."
+  unregisterPlayer: "Скасування реєстрації гравця %var0%..."
+  YAMLProvider_InvalidGroupsSettings: "Некоректні налаштування ranks.yml. Перевірте файл."

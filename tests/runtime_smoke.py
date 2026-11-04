@@ -41,7 +41,7 @@ with tempfile.TemporaryDirectory(prefix="pureperms-runtime-", dir=os.environ.get
     pureperms_data.mkdir()
     (pureperms_data / "config.yml").write_text(
         "data-provider: json\n"
-        "default-language: vi\n"
+        "default-language: vie\n"
         "disable-op: false\n"
         "enable-multiworld-perms: false\n"
         "superadmin-ranks: [\"OP\"]\n",
@@ -117,7 +117,7 @@ with tempfile.TemporaryDirectory(prefix="pureperms-runtime-", dir=os.environ.get
         "plugin_sha256": plugin_sha256,
         "server_ready": ready,
         "plugin_enabled": "Enabling PurePerms v2.1.0" in content,
-        "language_selected": "Đã chọn ngôn ngữ PurePerms là 'vi'." in content,
+        "language_selected": "Đã chọn ngôn ngữ PurePerms là 'vie'." in content,
         "ppinfo": "Bạn đang sử dụng PurePerms v2.1.0 của 64FF00." in content,
         "listranks": "Tất cả rank đã đăng ký: Guest" in content,
         "exit_code": exit_code,

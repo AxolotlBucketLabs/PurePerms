@@ -12,11 +12,24 @@ data-provider: json
 
 disable-op: false
 
-# Set the default language for PurePerms
-# - en
-# - vi
+# Set the default language for PurePerms.
+# Language files are stored in resources/lang/ and use ISO 639-2 codes:
+# - eng: English
+# - vie: Tiếng Việt
+# - kor: 한국어
+# - rus: Русский
+# - spa: Español
+# - ukr: Українська
+# - zho: 简体中文
+# - ind: Bahasa Indonesia
+# - tur: Türkçe
+# - fra: Français
+# - por: Português
+# - deu: Deutsch
+# - jpn: 日本語
+# - ita: Italiano
 # English message resource by @64FF00 and @Samueljh1 (GitHub)
-default-language: en
+default-language: eng
 
 # Setting this option will allow you to use per-world permissions
 # - true / false

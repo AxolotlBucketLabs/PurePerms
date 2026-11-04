@@ -1,0 +1,106 @@
+---
+messages-version: "2.1.0"
+language: "tur"
+cmds:
+  addrank:
+    desc: "Yeni bir rütbe ekler."
+    usage: "Kullanım: /addrank <rütbe>"
+    messages:
+      rank_added_successfully: "%var0% rütbesi başarıyla eklendi."
+      rank_already_exists: "%var0% rütbesi zaten mevcut."
+      invalid_rank_name: "Geçersiz rütbe adı."
+  defrank:
+    desc: "Varsayılan rütbeyi ayarlar."
+    usage: "Kullanım: /defrank <rütbe> [dünya]"
+    messages:
+      defrank_successfully: "Varsayılan rütbe %var0% olarak ayarlandı."
+      rank_not_exist: "%var0% rütbesi mevcut değil."
+      level_not_exist: "%var0% dünyası mevcut değil."
+  plperms:
+    desc: "Belirli bir eklentinin izinlerini gösterir."
+    usage: "Kullanım: /plperms <eklenti> [sayfa]"
+    messages:
+      no_plugin_perms: "%var0% eklentisinin izni yok."
+      plugin_not_exist: "%var0% eklentisi mevcut değil."
+      plugin_perms_list: "%var0% eklentisinin izinleri (sayfa %var1% / %var2%):"
+  fperms:
+    desc: "Belirli bir eklentinin izinlerini gösterir."
+    usage: "Kullanım: /fperms <eklenti> [sayfa]"
+    messages:
+      no_plugin_perms: "%var0% eklentisinin izni yok."
+      plugin_not_exist: "%var0% eklentisi mevcut değil."
+      plugin_perms_list: "%var0% eklentisinin izinleri (sayfa %var1% / %var2%):"
+  setgperm:
+    desc: "Bir gruba izin ekler."
+    usage: "Kullanım: /setgperm <grup> <izin> [dünya]"
+    messages:
+      group_not_exist: "%var0% grubu mevcut değil."
+      level_not_exist: "%var0% dünyası mevcut değil."
+      gperm_added_successfully: "%var0% izni gruba eklendi."
+  unsetgperm:
+    desc: "Bir grubun iznini kaldırır."
+    usage: "Kullanım: /unsetgperm <grup> <izin> [dünya]"
+    messages:
+      group_not_exist: "%var0% grubu mevcut değil."
+      level_not_exist: "%var0% dünyası mevcut değil."
+      gperm_not_found: "Bu grupta %var0% izni yok."
+      gperm_removed_successfully: "%var0% izni gruptan kaldırıldı."
+  ppreload:
+    desc: "PurePerms verilerini ve mesajlarını yeniler."
+    messages:
+      successfully_reloaded: "PurePerms verileri ve mesajları yenilendi."
+      failed: "PurePerms yenilenemedi. Sunucu günlüğünü kontrol edin."
+  ranks:
+    desc: "Tüm rütbeleri gösterir."
+    messages:
+      all_registered_ranks: "Kayıtlı rütbeler: %var0%"
+  ppinfo:
+    desc: "PurePerms bilgilerini gösterir."
+    messages:
+      ppinfo_console: "%var1% tarafından geliştirilen PurePerms v%var0% kullanılıyor."
+      ppinfo_player: "Bu sunucu %var1% tarafından geliştirilen PurePerms v%var0% kullanıyor."
+  rmrank:
+    desc: "Rütbe listesinden rütbe kaldırır."
+    usage: "Kullanım: /rmrank <rütbe>"
+    messages:
+      ranks_removed_successfully: "%var0% rütbesi kaldırıldı."
+      ranks_not_exist: "%var0% rütbesi mevcut değil."
+      invalid_ranks_name: "Geçersiz rütbe adı."
+  setrank:
+    desc: "Bir oyuncunun rütbesini ayarlar."
+    usage: "Kullanım: /setrank <oyuncu> <rütbe> <süre> [dünya]"
+    messages:
+      access_denied_01: "%var0% rütbesini verme izniniz yok."
+      access_denied_02: "%var0% rütbesine sahip oyuncunun rütbesi değiştirilemez."
+      rank_not_exist: "%var0% rütbesi mevcut değil."
+      level_not_exist: "%var0% dünyası mevcut değil."
+      invalid_exp_time: "%var0% süresi geçersiz. permanent, 1d2h3m, 2h veya 30m kullanın."
+      on_player_ranks_change: "Rütbeniz %var0% olarak değiştirildi!"
+      setrank_successfully: "%var0% oyuncusunun rütbesi ayarlandı."
+  setuperm:
+    desc: "Oyuncuya izin ekler."
+    usage: "Kullanım: /setuperm <oyuncu> <izin> [dünya]"
+    messages:
+      level_not_exist: "%var0% dünyası mevcut değil."
+      uperm_added_successfully: "%var0% izni %var1% oyuncusuna eklendi."
+  unsetuperm:
+    desc: "Oyuncunun iznini kaldırır."
+    usage: "Kullanım: /unsetuperm <oyuncu> <izin> [dünya]"
+    messages:
+      level_not_exist: "%var0% dünyası mevcut değil."
+      uperm_removed_successfully: "%var0% izni %var1% oyuncusundan kaldırıldı."
+logger_messages:
+  language_selected: "PurePerms dili '%var0%' olarak ayarlandı."
+  getConfigValue_01: "config.yml içinde %var0% anahtarı bulunamadı."
+  getDefaultGroup_01: "Rütbe dosyasında birden fazla varsayılan rütbe tanımlandı."
+  getDefaultGroup_02: "Varsayılan rütbe bulunamadı."
+  getDefaultGroup_03: "Varsayılan rütbe otomatik olarak ayarlanıyor."
+  getGroup_01: "%var0% grubu bulunamadı."
+  getGroup_02: "%var0% grubunun verileri geçersiz veya bozuk."
+  registerPlayer: "%var0% oyuncusu kaydediliyor..."
+  setProvider_MySQL: "Veri provider'ı MySQL olarak ayarlandı."
+  setProvider_JSON: "Veri provider'ı JSON olarak ayarlandı."
+  setProvider_SQLITE3: "Veri provider'ı SQLite3 olarak ayarlandı."
+  setProvider_NotFound: "%var0% provider'ı mevcut değil. Varsayılan provider kullanılacak."
+  unregisterPlayer: "%var0% oyuncusunun kaydı kaldırılıyor..."
+  YAMLProvider_InvalidGroupsSettings: "Geçersiz ranks.yml ayarları. Dosyayı kontrol edin."

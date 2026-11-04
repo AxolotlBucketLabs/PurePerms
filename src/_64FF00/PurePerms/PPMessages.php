@@ -6,6 +6,24 @@ use pocketmine\utils\Config;
 
 class PPMessages
 {
+    /** @var array<string, string> */
+    private const LANGUAGE_ALIASES = [
+        "en" => "eng",
+        "vi" => "vie",
+        "ko" => "kor",
+        "ru" => "rus",
+        "es" => "spa",
+        "uk" => "ukr",
+        "zh" => "zho",
+        "id" => "ind",
+        "tr" => "tur",
+        "fr" => "fra",
+        "pt" => "por",
+        "de" => "deu",
+        "ja" => "jpn",
+        "it" => "ita",
+    ];
+
     /*
         PurePerms by 64FF00 (Twitter: @64FF00)
 
@@ -20,7 +38,7 @@ class PPMessages
     */
 
     private PurePerms $plugin;
-    private string $language = "en";
+    private string $language = "eng";
     private Config $messages;
     /** @var list<string> */
     private array $langList = [];
@@ -40,10 +58,11 @@ class PPMessages
         $result = [];
         foreach($this->plugin->getResources() as $resource)
         {
-            $resourceName = $resource->getFilename();
-            if(mb_strpos($resourceName, "messages-") !== false) $result[] = substr($resourceName, -6, -4);
+            $resourceName = strtolower($resource->getFilename());
+            if(preg_match('/^messages-([a-z]{3})\.yml$/', $resourceName, $matches) === 1)
+                $result[] = $matches[1];
         }
-        $this->langList = $result;
+        $this->langList = array_values(array_unique($result));
     }
 
     /**
@@ -76,7 +95,7 @@ class PPMessages
     public function loadMessages(): void
     {       
         $defaultLangValue = $this->plugin->getConfigValue("default-language");
-        $defaultLang = is_string($defaultLangValue) ? $defaultLangValue : "en";
+        $defaultLang = is_string($defaultLangValue) ? $this->normalizeLanguage($defaultLangValue) : "eng";
         $languageFound = false;
         foreach($this->langList as $langName)
         {
@@ -90,23 +109,32 @@ class PPMessages
         if(!$languageFound)
         {
             $this->plugin->getLogger()->warning("Language resource " . $defaultLang . " not found. Using default language resource by " . $this->plugin->getDescription()->getAuthors()[0]);
-            $this->language = "en";
+            $this->language = "eng";
         }
         
-        $this->plugin->saveResource("messages-" . $this->language . ".yml");
-        $this->messages = new Config($this->plugin->getDataFolder() . "messages-" . $this->language . ".yml", Config::YAML, [
+        $resourceName = "lang/messages-" . $this->language . ".yml";
+        $dataPath = $this->plugin->getDataFolder() . $resourceName;
+        $this->plugin->saveResource($resourceName);
+        $this->messages = new Config($dataPath, Config::YAML, [
         ]);
         $this->plugin->getLogger()->info($this->getMessage("logger_messages.language_selected", $this->language));
         if(version_compare($this->getVersion(), $this->plugin->getPPVersion()) === -1)
         {
-            $this->plugin->saveResource("messages-" . $this->language . ".yml", true);
-            $this->messages = new Config($this->plugin->getDataFolder() . "messages-" . $this->language . ".yml", Config::YAML, [
+            $this->plugin->saveResource($resourceName, true);
+            $this->messages = new Config($dataPath, Config::YAML, [
             ]);
         }
+    }
+
+    private function normalizeLanguage(string $language): string
+    {
+        $language = strtolower(trim($language));
+        return self::LANGUAGE_ALIASES[$language] ?? $language;
     }
     
     public function reloadMessages(): void
     {
-        $this->messages->reload();
+        $this->registerLanguages();
+        $this->loadMessages();
     }    
 }

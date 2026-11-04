@@ -1,6 +1,6 @@
 ---
 messages-version: "2.1.0"
-language: "vi"
+language: "vie"
 cmds:
   addrank:
     desc: "Thêm một rank mới."
@@ -23,6 +23,33 @@ cmds:
       no_plugin_perms: "Plugin %var0% không có permission nào."
       plugin_not_exist: "Plugin %var0% không tồn tại."
       plugin_perms_list: "Danh sách permission của plugin %var0% (%var1% / %var2%): "
+  fperms:
+    desc: "Hiển thị danh sách permission của một plugin."
+    usage: "Cách dùng: /fperms <plugin> [trang]"
+    messages:
+      no_plugin_perms: "Plugin %var0% không có permission nào."
+      plugin_not_exist: "Plugin %var0% không tồn tại."
+      plugin_perms_list: "Danh sách permission của plugin %var0% (%var1% / %var2%): "
+  setgperm:
+    desc: "Thêm permission cho group."
+    usage: "Cách dùng: /setgperm <group> <permission> [world]"
+    messages:
+      group_not_exist: "Group %var0% không tồn tại."
+      level_not_exist: "World %var0% không tồn tại."
+      gperm_added_successfully: "Đã thêm permission %var0% cho group."
+  unsetgperm:
+    desc: "Xóa permission khỏi group."
+    usage: "Cách dùng: /unsetgperm <group> <permission> [world]"
+    messages:
+      group_not_exist: "Group %var0% không tồn tại."
+      level_not_exist: "World %var0% không tồn tại."
+      gperm_not_found: "Group không có permission %var0%."
+      gperm_removed_successfully: "Đã xóa permission %var0% khỏi group."
+  ppreload:
+    desc: "Tải lại dữ liệu và message của PurePerms."
+    messages:
+      successfully_reloaded: "Đã tải lại dữ liệu và message của PurePerms."
+      failed: "Không thể tải lại PurePerms. Hãy kiểm tra log server."
   ranks:
     desc: "Hiển thị danh sách tất cả rank."
     messages:
@@ -47,6 +74,7 @@ cmds:
       access_denied_02: "Bạn không có quyền thay đổi rank của người chơi đang có rank %var0%."
       rank_not_exist: "Rank %var0% không tồn tại."
       level_not_exist: "World %var0% không tồn tại."
+      invalid_exp_time: "Thời hạn %var0% không hợp lệ. Dùng permanent, 1d2h3m, 2h hoặc 30m."
       on_player_ranks_change: "Rank của bạn đã được đổi thành %var0%!"
       setrank_successfully: "Đã đặt rank %var0% thành công."
   setuperm:

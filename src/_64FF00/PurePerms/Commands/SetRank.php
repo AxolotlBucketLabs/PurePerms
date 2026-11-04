@@ -59,7 +59,14 @@ class SetRank extends PurePermsCommand
 
         $expTime = -1;
         if(isset($args[2]))
+        {
+            if(!$this->plugin->isValidExpiration($args[2]))
+            {
+                $sender->sendMessage(TextFormat::RED . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.setrank.messages.invalid_exp_time", $args[2]));
+                return true;
+            }
             $expTime = $this->plugin->date2Int($args[2]);
+        }
         $WorldName = null;
         if(isset($args[3]))
         {

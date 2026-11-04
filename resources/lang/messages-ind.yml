@@ -1,0 +1,106 @@
+---
+messages-version: "2.1.0"
+language: "ind"
+cmds:
+  addrank:
+    desc: "Menambahkan rank baru."
+    usage: "Penggunaan: /addrank <rank>"
+    messages:
+      rank_added_successfully: "%var0% berhasil ditambahkan ke daftar rank."
+      rank_already_exists: "Rank %var0% sudah ada."
+      invalid_rank_name: "Nama rank tidak valid."
+  defrank:
+    desc: "Mengatur rank default."
+    usage: "Penggunaan: /defrank <rank> [dunia]"
+    messages:
+      defrank_successfully: "Rank default berhasil diatur menjadi %var0%."
+      rank_not_exist: "Rank %var0% tidak ada."
+      level_not_exist: "Dunia %var0% tidak ada."
+  plperms:
+    desc: "Menampilkan permission plugin tertentu."
+    usage: "Penggunaan: /plperms <plugin> [halaman]"
+    messages:
+      no_plugin_perms: "Plugin %var0% tidak memiliki permission."
+      plugin_not_exist: "Plugin %var0% tidak ada."
+      plugin_perms_list: "Daftar permission plugin %var0% (halaman %var1% dari %var2%):"
+  fperms:
+    desc: "Menampilkan permission plugin tertentu."
+    usage: "Penggunaan: /fperms <plugin> [halaman]"
+    messages:
+      no_plugin_perms: "Plugin %var0% tidak memiliki permission."
+      plugin_not_exist: "Plugin %var0% tidak ada."
+      plugin_perms_list: "Daftar permission plugin %var0% (halaman %var1% dari %var2%):"
+  setgperm:
+    desc: "Menambahkan permission ke grup."
+    usage: "Penggunaan: /setgperm <grup> <permission> [dunia]"
+    messages:
+      group_not_exist: "Grup %var0% tidak ada."
+      level_not_exist: "Dunia %var0% tidak ada."
+      gperm_added_successfully: "Permission %var0% berhasil ditambahkan ke grup."
+  unsetgperm:
+    desc: "Menghapus permission grup."
+    usage: "Penggunaan: /unsetgperm <grup> <permission> [dunia]"
+    messages:
+      group_not_exist: "Grup %var0% tidak ada."
+      level_not_exist: "Dunia %var0% tidak ada."
+      gperm_not_found: "Grup tersebut tidak memiliki permission %var0%."
+      gperm_removed_successfully: "Permission %var0% dihapus dari grup."
+  ppreload:
+    desc: "Memuat ulang data dan pesan PurePerms."
+    messages:
+      successfully_reloaded: "Data dan pesan PurePerms berhasil dimuat ulang."
+      failed: "PurePerms tidak dapat dimuat ulang. Periksa log server."
+  ranks:
+    desc: "Menampilkan semua rank."
+    messages:
+      all_registered_ranks: "Semua rank terdaftar: %var0%"
+  ppinfo:
+    desc: "Menampilkan informasi PurePerms."
+    messages:
+      ppinfo_console: "Anda sedang menggunakan PurePerms v%var0% oleh %var1%."
+      ppinfo_player: "Server ini menggunakan PurePerms v%var0% oleh %var1%."
+  rmrank:
+    desc: "Menghapus rank dari daftar."
+    usage: "Penggunaan: /rmrank <rank>"
+    messages:
+      ranks_removed_successfully: "Rank %var0% berhasil dihapus."
+      ranks_not_exist: "Rank %var0% tidak ada."
+      invalid_ranks_name: "Nama rank tidak valid."
+  setrank:
+    desc: "Mengatur rank pemain."
+    usage: "Penggunaan: /setrank <pemain> <rank> <durasi> [dunia]"
+    messages:
+      access_denied_01: "Anda tidak memiliki izin untuk memberikan rank %var0%."
+      access_denied_02: "Anda tidak dapat mengubah rank pemain yang memiliki %var0%."
+      rank_not_exist: "Rank %var0% tidak ada."
+      level_not_exist: "Dunia %var0% tidak ada."
+      invalid_exp_time: "Durasi %var0% tidak valid. Gunakan permanent, 1d2h3m, 2h, atau 30m."
+      on_player_ranks_change: "Rank Anda telah diubah menjadi %var0%!"
+      setrank_successfully: "Rank %var0% berhasil diatur."
+  setuperm:
+    desc: "Menambahkan permission ke pemain."
+    usage: "Penggunaan: /setuperm <pemain> <permission> [dunia]"
+    messages:
+      level_not_exist: "Dunia %var0% tidak ada."
+      uperm_added_successfully: "Permission %var0% ditambahkan ke %var1%."
+  unsetuperm:
+    desc: "Menghapus permission pemain."
+    usage: "Penggunaan: /unsetuperm <pemain> <permission> [dunia]"
+    messages:
+      level_not_exist: "Dunia %var0% tidak ada."
+      uperm_removed_successfully: "Permission %var0% dihapus dari %var1%."
+logger_messages:
+  language_selected: "Bahasa PurePerms diatur menjadi '%var0%'."
+  getConfigValue_01: "Kunci %var0% tidak ditemukan di config.yml."
+  getDefaultGroup_01: "Lebih dari satu rank default ditentukan."
+  getDefaultGroup_02: "Rank default tidak ditemukan."
+  getDefaultGroup_03: "Mengatur rank default secara otomatis."
+  getGroup_01: "Grup %var0% tidak ditemukan."
+  getGroup_02: "Data grup %var0% tidak valid atau rusak."
+  registerPlayer: "Mendaftarkan pemain %var0%..."
+  setProvider_MySQL: "Provider data diatur ke MySQL."
+  setProvider_JSON: "Provider data diatur ke JSON."
+  setProvider_SQLITE3: "Provider data diatur ke SQLite3."
+  setProvider_NotFound: "Provider %var0% tidak ada. Menggunakan provider default."
+  unregisterPlayer: "Membatalkan pendaftaran pemain %var0%..."
+  YAMLProvider_InvalidGroupsSettings: "Pengaturan ranks.yml tidak valid. Periksa file tersebut."

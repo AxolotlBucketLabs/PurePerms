@@ -31,6 +31,11 @@ class PLPerms extends PurePermsCommand
         $this->setPermission("pperms.command.plperms");
     }
 
+    private function messageNode(): string
+    {
+        return strtolower($this->getName()) === "fperms" ? "cmds.fperms" : "cmds.plperms";
+    }
+
     /**
      * @param CommandSender $sender
      * @param $label
@@ -43,7 +48,7 @@ class PLPerms extends PurePermsCommand
             return false;
         if(!isset($args[0]) || count($args) > 2)
         {
-            $sender->sendMessage(TextFormat::GREEN . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.plperms.usage"));
+            $sender->sendMessage(TextFormat::GREEN . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage($this->messageNode() . ".usage"));
             return true;
         }
         
@@ -51,7 +56,7 @@ class PLPerms extends PurePermsCommand
         $plugin = $isPocketMine ? null : $this->plugin->getServer()->getPluginManager()->getPlugin($args[0]);
         if(!$isPocketMine && $plugin === null)
         {
-            $sender->sendMessage(TextFormat::RED . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.plperms.messages.plugin_not_exist", $args[0]));
+            $sender->sendMessage(TextFormat::RED . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage($this->messageNode() . ".messages.plugin_not_exist", $args[0]));
             return true;
         }
         
@@ -72,7 +77,7 @@ class PLPerms extends PurePermsCommand
         if(empty($permissions))
         {
             $pluginName = $plugin instanceof PluginBase ? $plugin->getName() : 'PocketMine-MP';
-            $sender->sendMessage(TextFormat::GREEN . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.plperms.messages.no_plugin_perms", $pluginName));
+            $sender->sendMessage(TextFormat::GREEN . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage($this->messageNode() . ".messages.no_plugin_perms", $pluginName));
             return true;
         }
         
@@ -92,7 +97,7 @@ class PLPerms extends PurePermsCommand
         }
         
         $pluginName = $plugin instanceof PluginBase ? $plugin->getName() : 'PocketMine-MP';
-        $sender->sendMessage(TextFormat::GREEN . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.plperms.messages.plugin_perms_list", $pluginName, $pageNumber, $maxPageNumber));
+        $sender->sendMessage(TextFormat::GREEN . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage($this->messageNode() . ".messages.plugin_perms_list", $pluginName, $pageNumber, $maxPageNumber));
         $pagePermissions = array_slice($permissions, ($pageNumber - 1) * $pageHeight, $pageHeight);
         foreach($pagePermissions as $permission)
         {

@@ -11,6 +11,10 @@ use _64FF00\PurePerms\Commands\RmRank;
 use _64FF00\PurePerms\Commands\UnSetUserPerm;
 use _64FF00\PurePerms\Commands\SetUserPerm;
 use _64FF00\PurePerms\Commands\SetRank;
+use _64FF00\PurePerms\Commands\SetGPerm;
+use _64FF00\PurePerms\Commands\UnsetGPerm;
+use _64FF00\PurePerms\Commands\FPerms;
+use _64FF00\PurePerms\Commands\PPReload;
 use _64FF00\PurePerms\DataManager\UserDataManager;
 use _64FF00\PurePerms\DataProviders\SQLite3Provider;
 use _64FF00\PurePerms\DataProviders\DefaultProvider;
@@ -97,12 +101,16 @@ class PurePerms extends PluginBase
         $commandMap->register("pureperms", new AddRank($this, "addrank", $this->getMessage("cmds.addrank.desc") . ' #64FF00'));
         $commandMap->register("pureperms", new DefRank($this, "defrank", $this->getMessage("cmds.defrank.desc") . ' #64FF00'));
         $commandMap->register("pureperms", new PLPerms($this, "plperms", $this->getMessage("cmds.plperms.desc") . ' #64FF00'));
+        $commandMap->register("pureperms", new FPerms($this, "fperms", $this->getMessage("cmds.fperms.desc") . ' #64FF00'));
         $commandMap->register("pureperms", new ListRanks($this, "listranks", $this->getMessage("cmds.ranks.desc") . ' #64FF00'));
         $commandMap->register("pureperms", new PPInfo($this, "ppinfo", $this->getMessage("cmds.ppinfo.desc") . ' #64FF00'));
         $commandMap->register("pureperms", new RmRank($this, "rmrank", $this->getMessage("cmds.rmrank.desc") . ' #64FF00'));
         $commandMap->register("pureperms", new SetRank($this, "setrank", $this->getMessage("cmds.setrank.desc") . ' #64FF00'));
         $commandMap->register("pureperms", new SetUserPerm($this, "setuperm", $this->getMessage("cmds.setuperm.desc") . ' #64FF00'));
         $commandMap->register("pureperms", new UnSetUserPerm($this, "unsetuperm", $this->getMessage("cmds.unsetuperm.desc") . ' #64FF00'));
+        $commandMap->register("pureperms", new SetGPerm($this, "setgperm", $this->getMessage("cmds.setgperm.desc") . ' #64FF00'));
+        $commandMap->register("pureperms", new UnsetGPerm($this, "unsetgperm", $this->getMessage("cmds.unsetgperm.desc") . ' #64FF00'));
+        $commandMap->register("pureperms", new PPReload($this, "ppreload", $this->getMessage("cmds.ppreload.desc") . ' #64FF00'));
 
     }
 
@@ -184,9 +192,27 @@ class PurePerms extends PluginBase
      */
     public function date2Int(string $date): int
     {
-        if(preg_match("/([0-9]+)d([0-9]+)h([0-9]+)m/", $date, $result_array) === 1)
-            return time() + ((int) $result_array[1] * 86400) + ((int) $result_array[2] * 3600) + ((int) $result_array[3] * 60);
+        $date = strtolower(trim($date));
+        if($this->isPermanentExpiration($date))
+            return -1;
+        if(preg_match("/^(?:(\\d+)d)?(?:(\\d+)h)?(?:(\\d+)m)?$/", $date, $result_array) === 1)
+            return time() + ((int) ($result_array[1] ?? 0) * 86400) + ((int) ($result_array[2] ?? 0) * 3600) + ((int) ($result_array[3] ?? 0) * 60);
         return -1;
+    }
+
+    public function isValidExpiration(string $date): bool
+    {
+        $date = strtolower(trim($date));
+        if($this->isPermanentExpiration($date))
+            return true;
+        if(preg_match("/^(?:(\\d+)d)?(?:(\\d+)h)?(?:(\\d+)m)?$/", $date, $matches) !== 1)
+            return false;
+        return ((int) ($matches[1] ?? 0) + (int) ($matches[2] ?? 0) + (int) ($matches[3] ?? 0)) > 0;
+    }
+
+    private function isPermanentExpiration(string $date): bool
+    {
+        return $date === "-1" || $date === "perm" || $date === "permanent";
     }
 
     /**
@@ -305,6 +331,16 @@ class PurePerms extends PluginBase
     public function getMessage(string $node, mixed ...$vars): string
     {
         return $this->messages->getMessage($node, ...$vars);
+    }
+
+    public function reload(): void
+    {
+        $this->reloadConfig();
+        $this->messages->reloadMessages();
+        $this->getProvider()->reload();
+        $this->updateGroups();
+        foreach($this->getServer()->getOnlinePlayers() as $player)
+            $this->updatePermissions($player);
     }
 
 

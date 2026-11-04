@@ -8,7 +8,7 @@ PurePerms is a maintained Axolotl-PM API 5 continuation that provides permission
 - PHP 8.4 for the development and build toolchain.
 - JSON, SQLite3, and MySQL providers are retained.
 
-Set `default-language: vi` in `config.yml` to use Vietnamese messages. The default language is English (`en`).
+Set `default-language: vie` in `config.yml` to use Vietnamese messages. The locale files live in `resources/lang/` and use these ISO 639-2 codes: `eng`, `vie`, `kor`, `rus`, `spa`, `ukr`, `zho`, `ind`, `tur`, `fra`, `por`, `deu`, `jpn`, and `ita`. English (`eng`) is the default.
 
 The maintained baseline is `2.1.0`. GitHub Actions produces an auditable PHAR artifact for every push and pull request; releases and tags are created separately after runtime verification.
 
@@ -20,13 +20,17 @@ Command | Description | Permission
 --- | --- | ---
 `/addrank` | Adds a new rank | pperms.command.addrank
 `/defrank <rank> [world]` | Allows you to set default rank. | pperms.command.defrank
-`/plperms` | Allows you to find permissions for a specific plugin. | pperms.command.plperms
+`/plperms <plugin> [page]` | Lists permissions for a specific plugin. | pperms.command.plperms
+`/fperms <plugin> [page]` | Legacy alias for listing plugin permissions. | pperms.command.fperms
 `/listranks` | Shows a list of all ranks. | pperms.command.ranks
 `/ppinfo` | Shows info about PurePerms. | pperms.command.ppinfo
 `/rmrank <rank>` | Removes a rank from the rank list. | pperms.command.rmrank
-`/setrank <player> <rank> [world]` | Sets rank for the user. | pperms.command.setrank
+`/setrank <player> <rank> [duration] [world]` | Sets a permanent or temporary rank. | pperms.command.setrank
 `/unsetuperm <rank> <permission> [world]` | Removes a permission from the user. | pperms.command.unsetuperm
 `/setuperm <player> <permission> [world]` | Adds a permission to the user. | pperms.command.setuperm
+`/setgperm <group> <permission> [world]` | Adds a permission to a group. | pperms.command.setgperm
+`/unsetgperm <group> <permission> [world]` | Removes a permission from a group. | pperms.command.unsetgperm
+`/ppreload` | Reloads config, messages, provider-backed group data, and online player permissions. | pperms.command.ppreload
 
 # Features
 
@@ -34,6 +38,8 @@ Command | Description | Permission
 - Multi-rank inheritance system to allow you to inherit rank permissions
 - Supports JSON, SQLITe3 + MySQL providers
 - Supports multi-world rank data when enabled in `resources/config.yml`.
+- Supports temporary ranks with `1d2h3m`, `2h`, or `30m`; use `permanent` for a permanent rank.
+- Reloads file-backed and MySQL-backed group data without restarting the server.
 - Provides simple and flexible PurePerms usage while retaining the legacy configuration format.
 
 ## Build locally

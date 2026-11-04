@@ -1,0 +1,106 @@
+---
+messages-version: "2.1.0"
+language: "spa"
+cmds:
+  addrank:
+    desc: "Añade un rango nuevo."
+    usage: "Uso: /addrank <rango>"
+    messages:
+      rank_added_successfully: "El rango %var0% se añadió correctamente."
+      rank_already_exists: "El rango %var0% ya existe."
+      invalid_rank_name: "El nombre del rango no es válido."
+  defrank:
+    desc: "Establece el rango predeterminado."
+    usage: "Uso: /defrank <rango> [mundo]"
+    messages:
+      defrank_successfully: "El rango predeterminado ahora es %var0%."
+      rank_not_exist: "El rango %var0% no existe."
+      level_not_exist: "El mundo %var0% no existe."
+  plperms:
+    desc: "Muestra los permisos de un plugin."
+    usage: "Uso: /plperms <plugin> [página]"
+    messages:
+      no_plugin_perms: "El plugin %var0% no tiene permisos."
+      plugin_not_exist: "El plugin %var0% no existe."
+      plugin_perms_list: "Permisos del plugin %var0% (página %var1% de %var2%):"
+  fperms:
+    desc: "Muestra los permisos de un plugin."
+    usage: "Uso: /fperms <plugin> [página]"
+    messages:
+      no_plugin_perms: "El plugin %var0% no tiene permisos."
+      plugin_not_exist: "El plugin %var0% no existe."
+      plugin_perms_list: "Permisos del plugin %var0% (página %var1% de %var2%):"
+  setgperm:
+    desc: "Añade un permiso a un grupo."
+    usage: "Uso: /setgperm <grupo> <permiso> [mundo]"
+    messages:
+      group_not_exist: "El grupo %var0% no existe."
+      level_not_exist: "El mundo %var0% no existe."
+      gperm_added_successfully: "Se añadió el permiso %var0% al grupo."
+  unsetgperm:
+    desc: "Elimina un permiso de un grupo."
+    usage: "Uso: /unsetgperm <grupo> <permiso> [mundo]"
+    messages:
+      group_not_exist: "El grupo %var0% no existe."
+      level_not_exist: "El mundo %var0% no existe."
+      gperm_not_found: "El grupo no tiene el permiso %var0%."
+      gperm_removed_successfully: "Se eliminó el permiso %var0% del grupo."
+  ppreload:
+    desc: "Recarga los datos y mensajes de PurePerms."
+    messages:
+      successfully_reloaded: "Los datos y mensajes de PurePerms se recargaron correctamente."
+      failed: "No se pudo recargar PurePerms. Revisa el registro del servidor."
+  ranks:
+    desc: "Muestra todos los rangos."
+    messages:
+      all_registered_ranks: "Rangos registrados: %var0%"
+  ppinfo:
+    desc: "Muestra la información de PurePerms."
+    messages:
+      ppinfo_console: "Estás usando PurePerms v%var0% de %var1%."
+      ppinfo_player: "Este servidor usa PurePerms v%var0% de %var1%."
+  rmrank:
+    desc: "Elimina un rango de la lista."
+    usage: "Uso: /rmrank <rango>"
+    messages:
+      ranks_removed_successfully: "El rango %var0% se eliminó correctamente."
+      ranks_not_exist: "El rango %var0% no existe."
+      invalid_ranks_name: "El nombre del rango no es válido."
+  setrank:
+    desc: "Establece el rango de un jugador."
+    usage: "Uso: /setrank <jugador> <rango> <duración> [mundo]"
+    messages:
+      access_denied_01: "No tienes permiso para asignar el rango %var0%."
+      access_denied_02: "No puedes cambiar el rango de un jugador que tiene %var0%."
+      rank_not_exist: "El rango %var0% no existe."
+      level_not_exist: "El mundo %var0% no existe."
+      invalid_exp_time: "La duración %var0% no es válida. Usa permanent, 1d2h3m, 2h o 30m."
+      on_player_ranks_change: "¡Tu rango cambió a %var0%!"
+      setrank_successfully: "Se estableció correctamente el rango de %var0%."
+  setuperm:
+    desc: "Añade un permiso a un jugador."
+    usage: "Uso: /setuperm <jugador> <permiso> [mundo]"
+    messages:
+      level_not_exist: "El mundo %var0% no existe."
+      uperm_added_successfully: "Se añadió el permiso %var0% a %var1%."
+  unsetuperm:
+    desc: "Elimina un permiso de un jugador."
+    usage: "Uso: /unsetuperm <jugador> <permiso> [mundo]"
+    messages:
+      level_not_exist: "El mundo %var0% no existe."
+      uperm_removed_successfully: "Se eliminó el permiso %var0% de %var1%."
+logger_messages:
+  language_selected: "El idioma de PurePerms es '%var0%'."
+  getConfigValue_01: "No se encontró la clave %var0% en config.yml."
+  getDefaultGroup_01: "Se declararon varios rangos predeterminados."
+  getDefaultGroup_02: "No se encontró ningún rango predeterminado."
+  getDefaultGroup_03: "Estableciendo el rango predeterminado automáticamente."
+  getGroup_01: "No se encontró el grupo %var0%."
+  getGroup_02: "Los datos del grupo %var0% son inválidos o están dañados."
+  registerPlayer: "Registrando al jugador %var0%..."
+  setProvider_MySQL: "Provider de datos: MySQL."
+  setProvider_JSON: "Provider de datos: JSON."
+  setProvider_SQLITE3: "Provider de datos: SQLite3."
+  setProvider_NotFound: "El provider %var0% no existe. Se usará el predeterminado."
+  unregisterPlayer: "Anulando el registro del jugador %var0%..."
+  YAMLProvider_InvalidGroupsSettings: "Configuración de ranks.yml no válida. Comprueba el archivo."

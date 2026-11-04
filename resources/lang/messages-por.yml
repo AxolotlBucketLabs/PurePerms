@@ -1,0 +1,106 @@
+---
+messages-version: "2.1.0"
+language: "por"
+cmds:
+  addrank:
+    desc: "Adiciona uma nova patente."
+    usage: "Uso: /addrank <patente>"
+    messages:
+      rank_added_successfully: "A patente %var0% foi adicionada."
+      rank_already_exists: "A patente %var0% já existe."
+      invalid_rank_name: "Nome de patente inválido."
+  defrank:
+    desc: "Define a patente padrão."
+    usage: "Uso: /defrank <patente> [mundo]"
+    messages:
+      defrank_successfully: "A patente padrão foi definida como %var0%."
+      rank_not_exist: "A patente %var0% não existe."
+      level_not_exist: "O mundo %var0% não existe."
+  plperms:
+    desc: "Mostra as permissões de um plugin."
+    usage: "Uso: /plperms <plugin> [página]"
+    messages:
+      no_plugin_perms: "O plugin %var0% não possui permissões."
+      plugin_not_exist: "O plugin %var0% não existe."
+      plugin_perms_list: "Permissões do plugin %var0% (página %var1% / %var2%):"
+  fperms:
+    desc: "Mostra as permissões de um plugin."
+    usage: "Uso: /fperms <plugin> [página]"
+    messages:
+      no_plugin_perms: "O plugin %var0% não possui permissões."
+      plugin_not_exist: "O plugin %var0% não existe."
+      plugin_perms_list: "Permissões do plugin %var0% (página %var1% / %var2%):"
+  setgperm:
+    desc: "Adiciona uma permissão a um grupo."
+    usage: "Uso: /setgperm <grupo> <permissão> [mundo]"
+    messages:
+      group_not_exist: "O grupo %var0% não existe."
+      level_not_exist: "O mundo %var0% não existe."
+      gperm_added_successfully: "A permissão %var0% foi adicionada ao grupo."
+  unsetgperm:
+    desc: "Remove uma permissão de um grupo."
+    usage: "Uso: /unsetgperm <grupo> <permissão> [mundo]"
+    messages:
+      group_not_exist: "O grupo %var0% não existe."
+      level_not_exist: "O mundo %var0% não existe."
+      gperm_not_found: "O grupo não possui a permissão %var0%."
+      gperm_removed_successfully: "A permissão %var0% foi removida do grupo."
+  ppreload:
+    desc: "Recarrega os dados e as mensagens do PurePerms."
+    messages:
+      successfully_reloaded: "Os dados e as mensagens do PurePerms foram recarregados."
+      failed: "Não foi possível recarregar o PurePerms. Verifique o log do servidor."
+  ranks:
+    desc: "Mostra todas as patentes."
+    messages:
+      all_registered_ranks: "Patentes registradas: %var0%"
+  ppinfo:
+    desc: "Mostra informações do PurePerms."
+    messages:
+      ppinfo_console: "Você está usando o PurePerms v%var0% de %var1%."
+      ppinfo_player: "Este servidor usa o PurePerms v%var0% de %var1%."
+  rmrank:
+    desc: "Remove uma patente da lista."
+    usage: "Uso: /rmrank <patente>"
+    messages:
+      ranks_removed_successfully: "A patente %var0% foi removida."
+      ranks_not_exist: "A patente %var0% não existe."
+      invalid_ranks_name: "Nome de patente inválido."
+  setrank:
+    desc: "Define a patente de um jogador."
+    usage: "Uso: /setrank <jogador> <patente> <duração> [mundo]"
+    messages:
+      access_denied_01: "Você não pode atribuir a patente %var0%."
+      access_denied_02: "Não é possível alterar a patente de um jogador com %var0%."
+      rank_not_exist: "A patente %var0% não existe."
+      level_not_exist: "O mundo %var0% não existe."
+      invalid_exp_time: "A duração %var0% é inválida. Use permanent, 1d2h3m, 2h ou 30m."
+      on_player_ranks_change: "Sua patente mudou para %var0%!"
+      setrank_successfully: "A patente de %var0% foi definida."
+  setuperm:
+    desc: "Adiciona uma permissão a um jogador."
+    usage: "Uso: /setuperm <jogador> <permissão> [mundo]"
+    messages:
+      level_not_exist: "O mundo %var0% não existe."
+      uperm_added_successfully: "A permissão %var0% foi adicionada a %var1%."
+  unsetuperm:
+    desc: "Remove uma permissão de um jogador."
+    usage: "Uso: /unsetuperm <jogador> <permissão> [mundo]"
+    messages:
+      level_not_exist: "O mundo %var0% não existe."
+      uperm_removed_successfully: "A permissão %var0% foi removida de %var1%."
+logger_messages:
+  language_selected: "Idioma do PurePerms definido como '%var0%'."
+  getConfigValue_01: "A chave %var0% não foi encontrada em config.yml."
+  getDefaultGroup_01: "Várias patentes padrão foram declaradas."
+  getDefaultGroup_02: "Nenhuma patente padrão foi encontrada."
+  getDefaultGroup_03: "Definindo a patente padrão automaticamente."
+  getGroup_01: "O grupo %var0% não foi encontrado."
+  getGroup_02: "Os dados do grupo %var0% são inválidos ou estão corrompidos."
+  registerPlayer: "Registrando o jogador %var0%..."
+  setProvider_MySQL: "Provider de dados: MySQL."
+  setProvider_JSON: "Provider de dados: JSON."
+  setProvider_SQLITE3: "Provider de dados: SQLite3."
+  setProvider_NotFound: "O provider %var0% não existe. Usando o provider padrão."
+  unregisterPlayer: "Removendo o registro do jogador %var0%..."
+  YAMLProvider_InvalidGroupsSettings: "Configuração inválida de ranks.yml. Verifique o arquivo."

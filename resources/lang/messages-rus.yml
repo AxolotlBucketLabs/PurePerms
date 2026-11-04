@@ -1,0 +1,106 @@
+---
+messages-version: "2.1.0"
+language: "rus"
+cmds:
+  addrank:
+    desc: "Добавить новый ранг."
+    usage: "Использование: /addrank <ранг>"
+    messages:
+      rank_added_successfully: "Ранг %var0% успешно добавлен."
+      rank_already_exists: "Ранг %var0% уже существует."
+      invalid_rank_name: "Недопустимое имя ранга."
+  defrank:
+    desc: "Установить ранг по умолчанию."
+    usage: "Использование: /defrank <ранг> [мир]"
+    messages:
+      defrank_successfully: "Ранг по умолчанию установлен: %var0%."
+      rank_not_exist: "Ранг %var0% не существует."
+      level_not_exist: "Мир %var0% не существует."
+  plperms:
+    desc: "Показать разрешения указанного плагина."
+    usage: "Использование: /plperms <плагин> [страница]"
+    messages:
+      no_plugin_perms: "У плагина %var0% нет разрешений."
+      plugin_not_exist: "Плагин %var0% не существует."
+      plugin_perms_list: "Разрешения плагина %var0% (страница %var1% из %var2%):"
+  fperms:
+    desc: "Показать разрешения указанного плагина через /fperms."
+    usage: "Использование: /fperms <плагин> [страница]"
+    messages:
+      no_plugin_perms: "У плагина %var0% нет разрешений."
+      plugin_not_exist: "Плагин %var0% не существует."
+      plugin_perms_list: "Разрешения плагина %var0% (страница %var1% из %var2%):"
+  ranks:
+    desc: "Показать все ранги."
+    messages:
+      all_registered_ranks: "Все зарегистрированные ранги: %var0%"
+  ppinfo:
+    desc: "Показать информацию о PurePerms."
+    messages:
+      ppinfo_console: "Вы используете PurePerms v%var0% от %var1%."
+      ppinfo_player: "Этот сервер использует PurePerms v%var0% от %var1%."
+  rmrank:
+    desc: "Удалить ранг из списка."
+    usage: "Использование: /rmrank <ранг>"
+    messages:
+      ranks_removed_successfully: "Ранг %var0% успешно удалён."
+      ranks_not_exist: "Ранг %var0% не существует."
+      invalid_ranks_name: "Недопустимое имя ранга."
+  setrank:
+    desc: "Установить ранг игроку."
+    usage: "Использование: /setrank <игрок> <ранг> <срок> [мир]"
+    messages:
+      access_denied_01: "У вас нет права назначать ранг %var0%."
+      access_denied_02: "Нельзя изменить ранг игрока с рангом %var0%."
+      rank_not_exist: "Ранг %var0% не существует."
+      level_not_exist: "Мир %var0% не существует."
+      invalid_exp_time: "Срок %var0% некорректен. Используйте permanent, 1d2h3m, 2h или 30m."
+      on_player_ranks_change: "Ваш ранг изменён на %var0%!"
+      setrank_successfully: "Ранг игрока %var0% успешно изменён."
+  setuperm:
+    desc: "Добавить разрешение игроку."
+    usage: "Использование: /setuperm <игрок> <разрешение> [мир]"
+    messages:
+      level_not_exist: "Мир %var0% не существует."
+      uperm_added_successfully: "Разрешение %var0% добавлено игроку %var1%."
+  unsetuperm:
+    desc: "Удалить разрешение игрока."
+    usage: "Использование: /unsetuperm <игрок> <разрешение> [мир]"
+    messages:
+      level_not_exist: "Мир %var0% не существует."
+      uperm_removed_successfully: "Разрешение %var0% удалено у игрока %var1%."
+  setgperm:
+    desc: "Добавить разрешение группе."
+    usage: "Использование: /setgperm <группа> <разрешение> [мир]"
+    messages:
+      group_not_exist: "Группа %var0% не существует."
+      level_not_exist: "Мир %var0% не существует."
+      gperm_added_successfully: "Разрешение %var0% добавлено группе."
+  unsetgperm:
+    desc: "Удалить разрешение группы."
+    usage: "Использование: /unsetgperm <группа> <разрешение> [мир]"
+    messages:
+      group_not_exist: "Группа %var0% не существует."
+      level_not_exist: "Мир %var0% не существует."
+      gperm_not_found: "У группы нет разрешения %var0%."
+      gperm_removed_successfully: "Разрешение %var0% удалено у группы."
+  ppreload:
+    desc: "Перезагрузить данные и сообщения PurePerms."
+    messages:
+      successfully_reloaded: "Данные и сообщения PurePerms успешно перезагружены."
+      failed: "Не удалось перезагрузить PurePerms. Проверьте журнал сервера."
+logger_messages:
+  language_selected: "Язык PurePerms установлен: '%var0%'."
+  getConfigValue_01: "Ключ %var0% не найден в config.yml."
+  getDefaultGroup_01: "В файле рангов объявлено несколько рангов по умолчанию."
+  getDefaultGroup_02: "Ранг по умолчанию не найден."
+  getDefaultGroup_03: "Ранг по умолчанию устанавливается автоматически."
+  getGroup_01: "Группа %var0% не найдена."
+  getGroup_02: "Данные группы %var0% недействительны или повреждены."
+  registerPlayer: "Регистрация игрока %var0%..."
+  setProvider_MySQL: "Провайдер данных: MySQL."
+  setProvider_JSON: "Провайдер данных: JSON."
+  setProvider_SQLITE3: "Провайдер данных: SQLite3."
+  setProvider_NotFound: "Провайдер %var0% не существует. Используется провайдер по умолчанию."
+  unregisterPlayer: "Отмена регистрации игрока %var0%..."
+  YAMLProvider_InvalidGroupsSettings: "НЕКОРРЕКТНЫЕ НАСТРОЙКИ GROUPS.YML: проверьте файл ranks.yml."

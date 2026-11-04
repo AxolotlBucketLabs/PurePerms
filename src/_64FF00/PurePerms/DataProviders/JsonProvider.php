@@ -169,6 +169,11 @@ class JsonProvider implements ProviderInterface
         $userData->save();
     }
 
+    public function reload(): void
+    {
+        $this->groups->reload();
+    }
+
     public function close(): void
     {
         // Nothing to close for the JSON provider.

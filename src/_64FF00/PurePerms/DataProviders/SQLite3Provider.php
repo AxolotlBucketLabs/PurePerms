@@ -64,6 +64,10 @@ class SQLite3Provider implements ProviderInterface
     public function setPlayerData(IPlayer $player, array $tempPlayerData): void{
     }
 
+    public function reload(): void{
+        $this->loadGroupsData();
+    }
+
     public function close(): void{
     }
 

@@ -1,0 +1,106 @@
+---
+messages-version: "2.1.0"
+language: "zho"
+cmds:
+  addrank:
+    desc: "添加新等级。"
+    usage: "用法：/addrank <等级>"
+    messages:
+      rank_added_successfully: "已成功将 %var0% 添加到等级列表。"
+      rank_already_exists: "等级 %var0% 已存在。"
+      invalid_rank_name: "等级名称无效。"
+  defrank:
+    desc: "设置默认等级。"
+    usage: "用法：/defrank <等级> [世界]"
+    messages:
+      defrank_successfully: "默认等级已设置为 %var0%。"
+      rank_not_exist: "等级 %var0% 不存在。"
+      level_not_exist: "世界 %var0% 不存在。"
+  plperms:
+    desc: "显示指定插件的权限。"
+    usage: "用法：/plperms <插件> [页码]"
+    messages:
+      no_plugin_perms: "插件 %var0% 没有权限。"
+      plugin_not_exist: "插件 %var0% 不存在。"
+      plugin_perms_list: "插件 %var0% 的权限列表（%var1% / %var2%）："
+  fperms:
+    desc: "显示指定插件的权限。"
+    usage: "用法：/fperms <插件> [页码]"
+    messages:
+      no_plugin_perms: "插件 %var0% 没有权限。"
+      plugin_not_exist: "插件 %var0% 不存在。"
+      plugin_perms_list: "插件 %var0% 的权限列表（%var1% / %var2%）："
+  setgperm:
+    desc: "为组添加权限。"
+    usage: "用法：/setgperm <组> <权限> [世界]"
+    messages:
+      group_not_exist: "组 %var0% 不存在。"
+      level_not_exist: "世界 %var0% 不存在。"
+      gperm_added_successfully: "已为组添加权限 %var0%。"
+  unsetgperm:
+    desc: "移除组的权限。"
+    usage: "用法：/unsetgperm <组> <权限> [世界]"
+    messages:
+      group_not_exist: "组 %var0% 不存在。"
+      level_not_exist: "世界 %var0% 不存在。"
+      gperm_not_found: "该组没有权限 %var0%。"
+      gperm_removed_successfully: "已从组移除权限 %var0%。"
+  ppreload:
+    desc: "重新加载 PurePerms 数据和消息。"
+    messages:
+      successfully_reloaded: "PurePerms 数据和消息已成功重新加载。"
+      failed: "无法重新加载 PurePerms。请检查服务器日志。"
+  ranks:
+    desc: "显示所有等级。"
+    messages:
+      all_registered_ranks: "所有已注册等级：%var0%"
+  ppinfo:
+    desc: "显示 PurePerms 信息。"
+    messages:
+      ppinfo_console: "当前使用的是 %var1% 制作的 PurePerms v%var0%。"
+      ppinfo_player: "此服务器使用的是 %var1% 制作的 PurePerms v%var0%。"
+  rmrank:
+    desc: "从等级列表中移除等级。"
+    usage: "用法：/rmrank <等级>"
+    messages:
+      ranks_removed_successfully: "已成功移除等级 %var0%。"
+      ranks_not_exist: "等级 %var0% 不存在。"
+      invalid_ranks_name: "等级名称无效。"
+  setrank:
+    desc: "设置玩家等级。"
+    usage: "用法：/setrank <玩家> <等级> <时长> [世界]"
+    messages:
+      access_denied_01: "你没有将玩家等级设置为 %var0% 的权限。"
+      access_denied_02: "不能修改拥有 %var0% 等级玩家的等级。"
+      rank_not_exist: "等级 %var0% 不存在。"
+      level_not_exist: "世界 %var0% 不存在。"
+      invalid_exp_time: "时长 %var0% 无效。请使用 permanent、1d2h3m、2h 或 30m。"
+      on_player_ranks_change: "你的等级已更改为 %var0%！"
+      setrank_successfully: "已成功设置 %var0% 的等级。"
+  setuperm:
+    desc: "为玩家添加权限。"
+    usage: "用法：/setuperm <玩家> <权限> [世界]"
+    messages:
+      level_not_exist: "世界 %var0% 不存在。"
+      uperm_added_successfully: "已为 %var1% 添加权限 %var0%。"
+  unsetuperm:
+    desc: "移除玩家权限。"
+    usage: "用法：/unsetuperm <玩家> <权限> [世界]"
+    messages:
+      level_not_exist: "世界 %var0% 不存在。"
+      uperm_removed_successfully: "已移除 %var1% 的权限 %var0%。"
+logger_messages:
+  language_selected: "PurePerms 语言已设置为“%var0%”。"
+  getConfigValue_01: "config.yml 中找不到键 %var0%。"
+  getDefaultGroup_01: "等级文件中声明了多个默认等级。"
+  getDefaultGroup_02: "找不到默认等级。"
+  getDefaultGroup_03: "正在自动设置默认等级。"
+  getGroup_01: "找不到组 %var0%。"
+  getGroup_02: "组 %var0% 的数据无效或已损坏。"
+  registerPlayer: "正在注册玩家 %var0%..."
+  setProvider_MySQL: "数据 provider 已设置为 MySQL。"
+  setProvider_JSON: "数据 provider 已设置为 JSON。"
+  setProvider_SQLITE3: "数据 provider 已设置为 SQLite3。"
+  setProvider_NotFound: "Provider %var0% 不存在，将使用默认 provider。"
+  unregisterPlayer: "正在注销玩家 %var0%..."
+  YAMLProvider_InvalidGroupsSettings: "ranks.yml 设置无效，请检查文件。"

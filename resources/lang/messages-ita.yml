@@ -1,0 +1,106 @@
+---
+messages-version: "2.1.0"
+language: "ita"
+cmds:
+  addrank:
+    desc: "Aggiunge un nuovo grado."
+    usage: "Uso: /addrank <grado>"
+    messages:
+      rank_added_successfully: "Il grado %var0% è stato aggiunto."
+      rank_already_exists: "Il grado %var0% esiste già."
+      invalid_rank_name: "Nome del grado non valido."
+  defrank:
+    desc: "Imposta il grado predefinito."
+    usage: "Uso: /defrank <grado> [mondo]"
+    messages:
+      defrank_successfully: "Il grado predefinito è stato impostato su %var0%."
+      rank_not_exist: "Il grado %var0% non esiste."
+      level_not_exist: "Il mondo %var0% non esiste."
+  plperms:
+    desc: "Mostra i permessi di un plugin."
+    usage: "Uso: /plperms <plugin> [pagina]"
+    messages:
+      no_plugin_perms: "Il plugin %var0% non ha permessi."
+      plugin_not_exist: "Il plugin %var0% non esiste."
+      plugin_perms_list: "Permessi del plugin %var0% (pagina %var1% / %var2%):"
+  fperms:
+    desc: "Mostra i permessi di un plugin."
+    usage: "Uso: /fperms <plugin> [pagina]"
+    messages:
+      no_plugin_perms: "Il plugin %var0% non ha permessi."
+      plugin_not_exist: "Il plugin %var0% non esiste."
+      plugin_perms_list: "Permessi del plugin %var0% (pagina %var1% / %var2%):"
+  setgperm:
+    desc: "Aggiunge un permesso a un gruppo."
+    usage: "Uso: /setgperm <gruppo> <permesso> [mondo]"
+    messages:
+      group_not_exist: "Il gruppo %var0% non esiste."
+      level_not_exist: "Il mondo %var0% non esiste."
+      gperm_added_successfully: "Il permesso %var0% è stato aggiunto al gruppo."
+  unsetgperm:
+    desc: "Rimuove un permesso da un gruppo."
+    usage: "Uso: /unsetgperm <gruppo> <permesso> [mondo]"
+    messages:
+      group_not_exist: "Il gruppo %var0% non esiste."
+      level_not_exist: "Il mondo %var0% non esiste."
+      gperm_not_found: "Il gruppo non possiede il permesso %var0%."
+      gperm_removed_successfully: "Il permesso %var0% è stato rimosso dal gruppo."
+  ppreload:
+    desc: "Ricarica i dati e i messaggi di PurePerms."
+    messages:
+      successfully_reloaded: "I dati e i messaggi di PurePerms sono stati ricaricati."
+      failed: "Impossibile ricaricare PurePerms. Controlla il log del server."
+  ranks:
+    desc: "Mostra tutti i gradi."
+    messages:
+      all_registered_ranks: "Gradi registrati: %var0%"
+  ppinfo:
+    desc: "Mostra le informazioni di PurePerms."
+    messages:
+      ppinfo_console: "Stai usando PurePerms v%var0% di %var1%."
+      ppinfo_player: "Questo server usa PurePerms v%var0% di %var1%."
+  rmrank:
+    desc: "Rimuove un grado dall'elenco."
+    usage: "Uso: /rmrank <grado>"
+    messages:
+      ranks_removed_successfully: "Il grado %var0% è stato rimosso."
+      ranks_not_exist: "Il grado %var0% non esiste."
+      invalid_ranks_name: "Nome del grado non valido."
+  setrank:
+    desc: "Imposta il grado di un giocatore."
+    usage: "Uso: /setrank <giocatore> <grado> <durata> [mondo]"
+    messages:
+      access_denied_01: "Non puoi assegnare il grado %var0%."
+      access_denied_02: "Non puoi modificare il grado di un giocatore con %var0%."
+      rank_not_exist: "Il grado %var0% non esiste."
+      level_not_exist: "Il mondo %var0% non esiste."
+      invalid_exp_time: "La durata %var0% non è valida. Usa permanent, 1d2h3m, 2h o 30m."
+      on_player_ranks_change: "Il tuo grado è cambiato in %var0%!"
+      setrank_successfully: "Il grado di %var0% è stato impostato."
+  setuperm:
+    desc: "Aggiunge un permesso a un giocatore."
+    usage: "Uso: /setuperm <giocatore> <permesso> [mondo]"
+    messages:
+      level_not_exist: "Il mondo %var0% non esiste."
+      uperm_added_successfully: "Il permesso %var0% è stato aggiunto a %var1%."
+  unsetuperm:
+    desc: "Rimuove un permesso da un giocatore."
+    usage: "Uso: /unsetuperm <giocatore> <permesso> [mondo]"
+    messages:
+      level_not_exist: "Il mondo %var0% non esiste."
+      uperm_removed_successfully: "Il permesso %var0% è stato rimosso da %var1%."
+logger_messages:
+  language_selected: "Lingua di PurePerms impostata su '%var0%'."
+  getConfigValue_01: "Chiave %var0% non trovata in config.yml."
+  getDefaultGroup_01: "Sono stati dichiarati più gradi predefiniti."
+  getDefaultGroup_02: "Nessun grado predefinito trovato."
+  getDefaultGroup_03: "Impostazione automatica del grado predefinito."
+  getGroup_01: "Gruppo %var0% non trovato."
+  getGroup_02: "I dati del gruppo %var0% non sono validi o sono danneggiati."
+  registerPlayer: "Registrazione del giocatore %var0%..."
+  setProvider_MySQL: "Provider dati: MySQL."
+  setProvider_JSON: "Provider dati: JSON."
+  setProvider_SQLITE3: "Provider dati: SQLite3."
+  setProvider_NotFound: "Il provider %var0% non esiste. Uso del provider predefinito."
+  unregisterPlayer: "Rimozione della registrazione del giocatore %var0%..."
+  YAMLProvider_InvalidGroupsSettings: "Impostazioni ranks.yml non valide. Controlla il file."
