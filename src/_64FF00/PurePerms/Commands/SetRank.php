@@ -105,7 +105,7 @@ class SetRank extends PurePermsCommand
         if($player instanceof Player)
         {
             if($this->plugin->getConfigValue("enable-multiworld-perms") !== true || ($WorldName === $player->getWorld()->getDisplayName()))
-                $player->sendMessage(TextFormat::GREEN . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.setrank.messages.on_player_rank_change", strtolower($group->getName())));
+                $player->sendMessage(TextFormat::GREEN . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.setrank.messages.on_player_ranks_change", strtolower($group->getName())));
         }
 
         return true;

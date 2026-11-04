@@ -65,6 +65,7 @@ cmds:
       level_not_exist: "World %var0% does NOT exist."
       uperm_removed_successfully: "Removed permission %var0% from %var1% successfully."
 logger_messages:
+  language_selected: "Setting PurePerms language to '%var0%'."
   getConfigValue_01: "Key %var0% not found in config.yml."
   getDefaultGroup_01: "More than one default ranks was declared in the ranks file."
   getDefaultGroup_02: "No default ranks was found in the rankss file."

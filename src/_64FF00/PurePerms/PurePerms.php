@@ -94,13 +94,13 @@ class PurePerms extends PluginBase
     private function registerCommands(): void
     {
         $commandMap = $this->getServer()->getCommandMap();
-        $commandMap->register("pureperms", new AddRank($this, "addrank", $this->getMessage("cmds.addgroup.desc") . ' #64FF00'));
-        $commandMap->register("pureperms", new DefRank($this, "defrank", $this->getMessage("cmds.defgroup.desc") . ' #64FF00'));
+        $commandMap->register("pureperms", new AddRank($this, "addrank", $this->getMessage("cmds.addrank.desc") . ' #64FF00'));
+        $commandMap->register("pureperms", new DefRank($this, "defrank", $this->getMessage("cmds.defrank.desc") . ' #64FF00'));
         $commandMap->register("pureperms", new PLPerms($this, "plperms", $this->getMessage("cmds.plperms.desc") . ' #64FF00'));
-        $commandMap->register("pureperms", new ListRanks($this, "listranks", $this->getMessage("cmds.groups.desc") . ' #64FF00'));
+        $commandMap->register("pureperms", new ListRanks($this, "listranks", $this->getMessage("cmds.ranks.desc") . ' #64FF00'));
         $commandMap->register("pureperms", new PPInfo($this, "ppinfo", $this->getMessage("cmds.ppinfo.desc") . ' #64FF00'));
-        $commandMap->register("pureperms", new RmRank($this, "rmrank", $this->getMessage("cmds.rmgroup.desc") . ' #64FF00'));
-        $commandMap->register("pureperms", new SetRank($this, "setrank", $this->getMessage("cmds.setgroup.desc") . ' #64FF00'));
+        $commandMap->register("pureperms", new RmRank($this, "rmrank", $this->getMessage("cmds.rmrank.desc") . ' #64FF00'));
+        $commandMap->register("pureperms", new SetRank($this, "setrank", $this->getMessage("cmds.setrank.desc") . ' #64FF00'));
         $commandMap->register("pureperms", new SetUserPerm($this, "setuperm", $this->getMessage("cmds.setuperm.desc") . ' #64FF00'));
         $commandMap->register("pureperms", new UnSetUserPerm($this, "unsetuperm", $this->getMessage("cmds.unsetuperm.desc") . ' #64FF00'));
 

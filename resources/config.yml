@@ -14,6 +14,7 @@ disable-op: false
 
 # Set the default language for PurePerms
 # - en
+# - vi
 # English message resource by @64FF00 and @Samueljh1 (GitHub)
 default-language: en
 

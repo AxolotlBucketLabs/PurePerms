@@ -37,6 +37,16 @@ with tempfile.TemporaryDirectory(prefix="pureperms-runtime-", dir=os.environ.get
     data.mkdir()
     plugins.mkdir()
     shutil.copy2(plugin, plugins / "PurePerms.phar")
+    pureperms_data = plugins / "PurePerms"
+    pureperms_data.mkdir()
+    (pureperms_data / "config.yml").write_text(
+        "data-provider: json\n"
+        "default-language: vi\n"
+        "disable-op: false\n"
+        "enable-multiworld-perms: false\n"
+        "superadmin-ranks: [\"OP\"]\n",
+        encoding="utf-8",
+    )
     (data / "server.properties").write_text(
         "language=eng\nserver-ip=127.0.0.1\nserver-port=0\nenable-ipv6=off\n"
         "enable-query=off\nxbox-auth=off\nlevel-type=FLAT\nview-distance=2\nmax-players=1\n",
@@ -107,8 +117,9 @@ with tempfile.TemporaryDirectory(prefix="pureperms-runtime-", dir=os.environ.get
         "plugin_sha256": plugin_sha256,
         "server_ready": ready,
         "plugin_enabled": "Enabling PurePerms v2.1.0" in content,
-        "ppinfo": "You are currently using PurePerms v2.1.0" in content,
-        "listranks": "Guest" in content,
+        "language_selected": "Đã chọn ngôn ngữ PurePerms là 'vi'." in content,
+        "ppinfo": "Bạn đang sử dụng PurePerms v2.1.0 của 64FF00." in content,
+        "listranks": "Tất cả rank đã đăng ký: Guest" in content,
         "exit_code": exit_code,
         "errors": errors,
     }
@@ -116,6 +127,7 @@ with tempfile.TemporaryDirectory(prefix="pureperms-runtime-", dir=os.environ.get
     if (
         not ready
         or not evidence["plugin_enabled"]
+        or not evidence["language_selected"]
         or not evidence["ppinfo"]
         or not evidence["listranks"]
         or exit_code != 0

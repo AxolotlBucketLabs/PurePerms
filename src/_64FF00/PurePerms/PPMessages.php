@@ -96,7 +96,7 @@ class PPMessages
         $this->plugin->saveResource("messages-" . $this->language . ".yml");
         $this->messages = new Config($this->plugin->getDataFolder() . "messages-" . $this->language . ".yml", Config::YAML, [
         ]);
-        $this->plugin->getLogger()->info("Setting default language to '" . $defaultLang . "'");
+        $this->plugin->getLogger()->info($this->getMessage("logger_messages.language_selected", $this->language));
         if(version_compare($this->getVersion(), $this->plugin->getPPVersion()) === -1)
         {
             $this->plugin->saveResource("messages-" . $this->language . ".yml", true);

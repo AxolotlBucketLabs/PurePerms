@@ -51,7 +51,7 @@ class AddRank extends PurePermsCommand
         }
         elseif($result === PurePerms::ALREADY_EXISTS)
         {
-            $sender->sendMessage(TextFormat::RED . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.rank.messages.rank_already_exists", $args[0]));
+            $sender->sendMessage(TextFormat::RED . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.addrank.messages.rank_already_exists", $args[0]));
         }
         else
         {

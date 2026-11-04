@@ -8,6 +8,8 @@ PurePerms is a maintained Axolotl-PM API 5 continuation that provides permission
 - PHP 8.4 for the development and build toolchain.
 - JSON, SQLite3, and MySQL providers are retained.
 
+Set `default-language: vi` in `config.yml` to use Vietnamese messages. The default language is English (`en`).
+
 The maintained baseline is `2.1.0`. GitHub Actions produces an auditable PHAR artifact for every push and pull request; releases and tags are created separately after runtime verification.
 
 See [UPSTREAM.md](UPSTREAM.md) for provenance and the maintenance policy, and [CHANGELOG.md](CHANGELOG.md) for changes in this continuation.

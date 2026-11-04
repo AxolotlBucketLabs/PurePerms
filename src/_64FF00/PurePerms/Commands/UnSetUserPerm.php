@@ -53,7 +53,7 @@ class UnSetUserPerm extends PurePermsCommand
             $world = $this->plugin->getServer()->getWorldManager()->getWorldByName($args[2]);
             if($world === null)
             {
-                $sender->sendMessage(TextFormat::RED . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.unsetgperm.messages.level_not_exist", $args[2]));
+                $sender->sendMessage(TextFormat::RED . PurePerms::MAIN_PREFIX . ' ' . $this->plugin->getMessage("cmds.unsetuperm.messages.level_not_exist", $args[2]));
                 return true;
             }
 
