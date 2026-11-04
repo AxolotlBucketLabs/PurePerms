@@ -85,6 +85,8 @@ class PurePerms extends PluginBase
         $this->setProvider();
         $this->registerPlayers();
         $this->getServer()->getPluginManager()->registerEvents(new PPListener($this), $this);
+        if(ScoreHudIntegration::register($this))
+            $this->getLogger()->notice("ScoreHud integration enabled.");
         $this->getScheduler()->scheduleRepeatingTask(new PPExpDateCheckTask($this), 72000);
     }
 

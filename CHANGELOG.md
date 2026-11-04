@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0 - ScoreHud integration
+
+- Added optional ScoreHud integration with `ppscore.rank`, `ppscore.prefix`, and `ppscore.suffix` tags.
+
 ## 2.1.0 - maintained API 5 baseline
 
 - Continued the original PurePerms plugin under NhanAZ-Plugins.

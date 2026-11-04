@@ -23,6 +23,18 @@ if($mysqlTask === false || str_contains($mysqlTask, "->ping(") || !str_contains(
     throw new RuntimeException("PHP 8.4-compatible MySQL health check regression failed");
 
 $main = file_get_contents(dirname(__DIR__) . "/src/_64FF00/PurePerms/PurePerms.php");
+if($main === false || !str_contains($main, 'ScoreHudIntegration::register'))
+    throw new RuntimeException("PurePerms ScoreHud integration registration regression failed");
+
+$scoreHud = file_get_contents(dirname(__DIR__) . "/src/_64FF00/PurePerms/ScoreHudIntegration.php");
+if($scoreHud === false)
+    throw new RuntimeException("PurePerms ScoreHud integration source is missing");
+foreach(["ppscore.rank", "ppscore.prefix", "ppscore.suffix"] as $scoreTag)
+{
+    if(!str_contains($scoreHud, $scoreTag))
+        throw new RuntimeException("PurePerms ScoreHud tag regression failed for $scoreTag");
+}
+
 if($main === false || !str_contains($main, 'new SetGPerm') || !str_contains($main, 'new UnsetGPerm') || !str_contains($main, 'new FPerms') || !str_contains($main, 'new PPReload'))
     throw new RuntimeException("PurePerms command registration regression failed");
 

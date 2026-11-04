@@ -66,6 +66,7 @@ jobs:
           output: build
           phpstan: max
           phpstan-server: .devtools-servers/axolotl
+          phpstan-paths: phpstan
 
       - name: Verify PHAR checksum and metadata
         shell: bash
