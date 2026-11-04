@@ -22,10 +22,11 @@ CREATE TABLE IF NOT EXISTS groups(
 
 CREATE TABLE IF NOT EXISTS groups_mw(
   id INT(16) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  groupName VARCHAR(64) UNIQUE KEY NOT NULL,
+  groupName VARCHAR(64) NOT NULL,
   isDefault BOOLEAN DEFAULT 0 NOT NULL,
-  worldName TEXT NOT NULL,
-  permissions TEXT NOT NULL
+  worldName VARCHAR(255) NOT NULL,
+  permissions TEXT NOT NULL,
+  UNIQUE KEY group_world (groupName, worldName)
 );
 
 CREATE TABLE IF NOT EXISTS players(
@@ -37,8 +38,9 @@ CREATE TABLE IF NOT EXISTS players(
 
 CREATE TABLE IF NOT EXISTS players_mw(
   id INT(16) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  userName VARCHAR(16) UNIQUE KEY NOT NULL,
-  worldName TEXT NOT NULL,
+  userName VARCHAR(16) NOT NULL,
+  worldName VARCHAR(255) NOT NULL,
   userGroup VARCHAR(32) NOT NULL,
-  permissions TEXT NOT NULL
+  permissions TEXT NOT NULL,
+  UNIQUE KEY user_world (userName, worldName)
 );

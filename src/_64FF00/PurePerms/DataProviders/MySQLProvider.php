@@ -57,12 +57,15 @@ class MySQLProvider implements ProviderInterface
         if($schema === false)
             throw new RuntimeException("Failed to connect to the MySQL database: Unable to read schema resource");
 
-        $this->db->multi_query($schema);
+        if(!$this->db->multi_query($schema))
+            throw new RuntimeException("Failed to initialize the MySQL database schema: " . $this->db->error);
         while($this->db->more_results())
         {
-            $this->db->next_result();
+            if(!$this->db->next_result())
+                throw new RuntimeException("Failed to initialize the MySQL database schema: " . $this->db->error);
         }
         fclose($resource);
+        $this->migrateMultiworldSchema();
         $this->loadGroupsData();
         $this->plugin->getScheduler()->scheduleRepeatingTask(new PPMySQLTask($this->plugin, $this->db), 1200);
     }
@@ -142,7 +145,10 @@ class MySQLProvider implements ProviderInterface
 
     public function loadGroupsData(): void
     {
+        $this->groupsData = [];
         $result01 = $this->db->query("SELECT * FROM groups;");
+        if($result01 === false)
+            throw new RuntimeException("Failed to load groups from MySQL: " . $this->db->error);
 
         if($result01 instanceof \mysqli_result)
         {
@@ -158,14 +164,15 @@ class MySQLProvider implements ProviderInterface
                 $this->db->multi_query($schema);
                 while($this->db->more_results())
                 {
-                    $this->db->next_result();
+                    if(!$this->db->next_result())
+                        throw new RuntimeException("Failed to initialize default MySQL groups: " . $this->db->error);
                 }
 
                 fclose($resource);
 
                 $result01 = $this->db->query("SELECT * FROM groups;");
                 if(!$result01 instanceof \mysqli_result)
-                    return;
+                    throw new RuntimeException("Failed to load default MySQL groups: " . $this->db->error);
             }
             while($currentRow = $result01->fetch_assoc())
             {
@@ -187,6 +194,8 @@ class MySQLProvider implements ProviderInterface
         }
 
         $result02 = $this->db->query("SELECT * FROM groups_mw;");
+        if($result02 === false)
+            throw new RuntimeException("Failed to load multiworld groups from MySQL: " . $this->db->error);
         if($result02 instanceof \mysqli_result)
         {
             while($currentRow = $result02->fetch_assoc())
@@ -202,14 +211,56 @@ class MySQLProvider implements ProviderInterface
                     $this->groupsData[$groupName] = ["alias" => "", "isDefault" => false, "inheritance" => [], "permissions" => []];
                 $groupData = $this->groupsData[$groupName];
                 $worlds = $groupData["worlds"] ?? [];
-                if(!is_array($worlds))
-                    $worlds = [];
                 $worlds[$worldName] = ["isDefault" => $isDefault, "permissions" => $worldPerms];
                 $groupData["worlds"] = $worlds;
                 $this->groupsData[$groupName] = $groupData;
             }
 
             $result02->free();
+        }
+    }
+
+    private function migrateMultiworldSchema(): void
+    {
+        $tables = [
+            ["groups_mw", "groupName", "groupName", "group_world"],
+            ["players_mw", "userName", "userName", "user_world"],
+        ];
+        foreach($tables as [$table, $keyColumn, $legacyIndex, $compositeIndex])
+        {
+            $columnResult = $this->db->query("SHOW COLUMNS FROM `$table` LIKE 'worldName'");
+            if(!$columnResult instanceof \mysqli_result)
+                throw new RuntimeException("Failed to inspect MySQL table '$table': " . $this->db->error);
+
+            $column = $columnResult->fetch_assoc();
+            $columnResult->free();
+            $columnType = is_array($column) ? ($column["Type"] ?? null) : null;
+            if(!is_string($columnType) || strtolower($columnType) !== "varchar(255)")
+            {
+                if(!$this->db->query("ALTER TABLE `$table` MODIFY `worldName` VARCHAR(255) NOT NULL"))
+                    throw new RuntimeException("Failed to migrate MySQL table '$table': " . $this->db->error);
+            }
+
+            $result = $this->db->query("SHOW INDEX FROM `$table`");
+            if(!$result instanceof \mysqli_result)
+                throw new RuntimeException("Failed to inspect MySQL table '$table': " . $this->db->error);
+
+            $indexes = [];
+            while($row = $result->fetch_assoc())
+            {
+                $indexName = $row["Key_name"] ?? null;
+                if(is_string($indexName))
+                    $indexes[$indexName] = true;
+            }
+            $result->free();
+
+            if(isset($indexes[$compositeIndex]))
+                continue;
+
+            $dropLegacyIndex = isset($indexes[$legacyIndex]) ? "DROP INDEX `$legacyIndex`, " : "";
+            $query = "ALTER TABLE `$table` $dropLegacyIndex ADD UNIQUE KEY `$compositeIndex` (`$keyColumn`, `worldName`)";
+            if(!$this->db->query($query))
+                throw new RuntimeException("Failed to migrate MySQL table '$table': " . $this->db->error);
         }
     }
 
@@ -222,7 +273,7 @@ class MySQLProvider implements ProviderInterface
             DELETE FROM groups
             WHERE groupName = '" . $this->db->escape_string($groupName) . "';");
         $this->db->query("
-            DELETE OR IGNORE FROM groups_mw
+            DELETE FROM groups_mw
             WHERE groupName = '" . $this->db->escape_string($groupName) . "';");
     }
 
@@ -242,9 +293,9 @@ class MySQLProvider implements ProviderInterface
      */
     public function setGroupsData(array $tempGroupsData): void
     {
-        $tempGroupData01 = array_diff_key($this->groupsData, $tempGroupsData);
-        $tempGroupName01 = key($tempGroupData01);
-        if(is_string($tempGroupName01)) $this->removeGroupData($tempGroupName01);
+        $removedGroupNames = array_keys(array_diff_key($this->groupsData, $tempGroupsData));
+        foreach($removedGroupNames as $removedGroupName)
+            $this->removeGroupData($removedGroupName);
         foreach($tempGroupsData as $tempGroupName02 => $tempGroupData02)
         {
             $this->updateGroupData($tempGroupName02, $tempGroupData02);

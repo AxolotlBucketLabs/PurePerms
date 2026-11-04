@@ -125,6 +125,11 @@ class PurePerms extends PluginBase
                 if($onEnable === true)
                     $this->getLogger()->notice($this->getMessage("logger_messages.setProvider_JSON"));
                 break;
+            case "mysql":
+                $provider = new MySQLProvider($this);
+                if($onEnable === true)
+                    $this->getLogger()->notice($this->getMessage("logger_messages.setProvider_MySQL"));
+                break;
             default:
                 $provider = new DefaultProvider($this);
                 if($onEnable === true)
@@ -192,7 +197,7 @@ class PurePerms extends PluginBase
     {
         $uniqueId = $this->getValidUUID($player);
         if(!isset($this->attachments[$uniqueId]))
-            throw new RuntimeException("Tried to calculate permissions on " .  $player->getName() . " using null attachment");
+            $this->attachments[$uniqueId] = $player->addAttachment($this);
         return $this->attachments[$uniqueId];
     }
 
