@@ -1,9 +1,6 @@
-<p align="center">
-    <img src="https://github.com/Vecnavium/PurePerms/blob/stable/icon.png" alt="PurePerms icon" width="128" /><br>
-    <b>PurePerms continuation for Axolotl-PM API 5.</b>
-</p>
+# PurePerms
 
-PurePerms is a permissions and rank manager for PocketMine-MP-compatible servers. This repository is the maintained API 5 continuation under [NhanAZ-Plugins](https://github.com/NhanAZ-Plugins). The plugin keeps the original `PurePerms` identity, commands, permission nodes, providers, and data layout so existing installations can migrate without renaming their data.
+PurePerms is a maintained Axolotl-PM API 5 continuation that provides permissions and rank management for PocketMine-MP-compatible servers. This repository is maintained under [NhanAZ-Plugins](https://github.com/NhanAZ-Plugins) and keeps the original `PurePerms` identity, commands, permission nodes, providers, and data layout so existing installations can migrate without renaming their data.
 
 ## Compatibility
 
