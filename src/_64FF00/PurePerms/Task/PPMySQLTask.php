@@ -37,7 +37,11 @@ class PPMySQLTask extends Task
 
     public function onRun(): void
     {
-        if($this->db->ping())
+        $result = $this->db->query("SELECT 1");
+        if($result instanceof \mysqli_result)
+            $result->free();
+
+        if($result !== false)
         {
             $this->plugin->getLogger()->debug("Connected to MySQLi Server");
         }
