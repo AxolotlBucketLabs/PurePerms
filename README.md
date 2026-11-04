@@ -2,6 +2,11 @@
 
 PurePerms is a maintained Axolotl-PM API 5 continuation that provides permissions and rank management for PocketMine-MP-compatible servers. This repository is maintained under [NhanAZ-Plugins](https://github.com/NhanAZ-Plugins) and keeps the original `PurePerms` identity, commands, permission nodes, providers, and data layout so existing installations can migrate without renaming their data.
 
+[![CI](https://github.com/NhanAZ-Plugins/PurePerms/actions/workflows/build.yml/badge.svg)](https://github.com/NhanAZ-Plugins/PurePerms/actions/workflows/build.yml)
+[![Latest release](https://img.shields.io/github/v/release/NhanAZ-Plugins/PurePerms)](https://github.com/NhanAZ-Plugins/PurePerms/releases/latest)
+[![License](https://img.shields.io/github/license/NhanAZ-Plugins/PurePerms)](LICENSE)
+[![Discord server online members](https://img.shields.io/discord/986553214889517088?label=Discord&logo=discord&logoColor=white&color=5865F2)](https://discord.gg/j2X83ujT6c)
+
 ## Compatibility
 
 - Axolotl-PM API 5 (`api: [5.0.0]`), tested against the pinned 5.51.1 source in CI.
