@@ -13,11 +13,11 @@ The API 5 fork is used as a reference for the minimum event and manifest changes
 
 PurePerms targets Axolotl-PM API 5. The manifest intentionally remains `PurePerms` with the original namespace and permission nodes. API 4 support is out of scope for this maintained continuation.
 
-Changes should preserve:
+Changes should preserve the following contracts:
 
-- `plugin.yml` name, main class, commands, permissions, and provider names;
-- `resources/config.yml`, rank data, player data, and provider formats;
-- public method names used by PureChat and other existing plugins.
+- Preserve the `plugin.yml` name, main class, commands, permissions, and provider names.
+- Preserve `resources/config.yml`, rank data, player data, and provider formats.
+- Preserve public method names used by PureChat and other existing plugins.
 
 When a PocketMine-MP or Axolotl-PM API change requires a compatibility fix, document it in the changelog and add a focused runtime or static-analysis check where practical.
 
