@@ -8,7 +8,7 @@ api: [5.0.0]
 load: POSTWORLD
 softdepend: [ScoreHud]
 author: ["64FF00", "ProjectInfinity"]
-authors: ["NhanAZ", "Vecnavium", "DemonicDev"]
+authors: ["AxolotlBucketLabs", "Vecnavium", "DemonicDev"]
 permissions:
   pperms:
     default: op

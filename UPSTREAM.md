@@ -5,7 +5,7 @@
 - Original project: [poggit-orphanage/PurePerms](https://github.com/poggit-orphanage/PurePerms).
 - Archived plugin page: [Poggit Archive PurePerms](https://poggit-archive.github.io/plugins/203-pureperms/).
 - API 5 reference port: [DemonicDev/PurePerms-API5](https://github.com/DemonicDev/PurePerms-API5).
-- Maintained repository: [NhanAZ-Plugins/PurePerms](https://github.com/NhanAZ-Plugins/PurePerms).
+- Maintained repository: [AxolotlBucketLabs/PurePerms](https://github.com/AxolotlBucketLabs/PurePerms).
 
 The API 5 fork is used as a reference for the minimum event and manifest changes. It is not copied blindly: this repository keeps the upstream plugin identity and data contract, then applies typed, reviewable fixes required by current Axolotl-PM and PHPStan Level Max.
 
