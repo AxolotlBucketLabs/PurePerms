@@ -60,7 +60,7 @@ jobs:
 
       - name: Analyze and build with DevTools
         id: build
-        uses: AxolotlBucketLabs/DevTools@04fd726101109739bf1fd629dbe8499d3e2864bb # v3.0.0
+        uses: AxolotlBucketLabs/DevTools@v4.0.0 # v4.0.0
         with:
           project: .
           output: build
